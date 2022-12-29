@@ -2,9 +2,11 @@ package com.ikjunweb.service;
 
 import com.ikjunweb.entity.User;
 import com.ikjunweb.repository.UserRepository;
+import com.ikjunweb.requestdto.UserDeleteRequest;
 import com.ikjunweb.requestdto.UserLoginRequest;
 import com.ikjunweb.requestdto.UserRegisterRequest;
 import com.ikjunweb.requestdto.UserUpdateRequest;
+import com.ikjunweb.responsedto.UserDeleteResponse;
 import com.ikjunweb.responsedto.UserLoginResponse;
 import com.ikjunweb.responsedto.UserRegisterResponse;
 import com.ikjunweb.responsedto.UserUpdateResponse;
@@ -23,6 +25,23 @@ public class UserService {
     }
 
     @Transactional
+    public UserDeleteResponse delete(Long id, UserDeleteRequest userDeleteRequest) {
+        User user = userRepository.findByUsernameAndPassword(userDeleteRequest.getUsername(), userDeleteRequest.getPassword());
+        if(user == null) {
+            UserDeleteResponse userDeleteResponse = UserDeleteResponse.builder()
+                    .httpStatus(HttpStatus.BAD_REQUEST)
+                    .build();
+            return userDeleteResponse;
+        }
+        userRepository.deleteById(id);
+        UserDeleteResponse userDeleteResponse = UserDeleteResponse.builder()
+                .nickname(user.getNickname())
+                .httpStatus(HttpStatus.OK)
+                .build();
+        return userDeleteResponse;
+    }
+
+    @Transactional
     public UserUpdateResponse update(Long id, UserUpdateRequest userUpdateRequest) {
         if(!validateUserUpdate(userUpdateRequest)) {
             UserUpdateResponse userUpdateResponse = UserUpdateResponse.builder()
@@ -33,12 +52,10 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(() -> {
             return new IllegalArgumentException("수정 실패");
         });
-        user = User.builder()
-                .nickname(userUpdateRequest.getNickname())
-                .username(userUpdateRequest.getUsername())
-                .password(userUpdateRequest.getPassword())
-                .email(userUpdateRequest.getEmail())
-                .build();
+        user.setNickname(userUpdateRequest.getNickname());
+        user.setUsername(userUpdateRequest.getUsername());
+        user.setPassword(userUpdateRequest.getPassword());
+        user.setEmail(userUpdateRequest.getEmail());
         UserUpdateResponse userUpdateResponse = UserUpdateResponse.builder()
                 .nickname(user.getNickname())
                 .username(user.getUsername())

@@ -1,8 +1,10 @@
 package com.ikjunweb.apicontroller;
 
+import com.ikjunweb.requestdto.UserDeleteRequest;
 import com.ikjunweb.requestdto.UserLoginRequest;
 import com.ikjunweb.requestdto.UserRegisterRequest;
 import com.ikjunweb.requestdto.UserUpdateRequest;
+import com.ikjunweb.responsedto.UserDeleteResponse;
 import com.ikjunweb.responsedto.UserLoginResponse;
 import com.ikjunweb.responsedto.UserRegisterResponse;
 import com.ikjunweb.responsedto.UserUpdateResponse;
@@ -45,5 +47,13 @@ public class UserApiController {
 
         if(userUpdateResponse.getHttpStatus() == HttpStatus.BAD_REQUEST) return new ResponseEntity<>(userUpdateResponse, HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(userUpdateResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/ikjun/user/{id}")
+    public ResponseEntity<UserDeleteResponse> delete(@PathVariable Long id, @RequestBody UserDeleteRequest userDeleteRequest) {
+        UserDeleteResponse userDeleteResponse = userService.delete(id, userDeleteRequest);
+
+        if(userDeleteResponse.getHttpStatus() == HttpStatus.BAD_REQUEST) return new ResponseEntity<>(userDeleteResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(userDeleteResponse, HttpStatus.OK);
     }
 }
