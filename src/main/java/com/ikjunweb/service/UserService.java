@@ -12,16 +12,19 @@ import com.ikjunweb.responsedto.UserRegisterResponse;
 import com.ikjunweb.responsedto.UserUpdateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Transactional
@@ -52,9 +55,13 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(() -> {
             return new IllegalArgumentException("수정 실패");
         });
+
+        String rawPassword = userUpdateRequest.getPassword();
+        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+
         user.setNickname(userUpdateRequest.getNickname());
         user.setUsername(userUpdateRequest.getUsername());
-        user.setPassword(userUpdateRequest.getPassword());
+        user.setPassword(encPassword);
         user.setEmail(userUpdateRequest.getEmail());
         UserUpdateResponse userUpdateResponse = UserUpdateResponse.builder()
                 .nickname(user.getNickname())
@@ -90,10 +97,13 @@ public class UserService {
             return userRegisterResponse;
         }
 
+        String rawPassword = userRegisterRequest.getPassword();
+        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+
         User user = User.builder()
                 .nickname(userRegisterRequest.getNickname())
                 .username(userRegisterRequest.getUsername())
-                .password(userRegisterRequest.getPassword())
+                .password(encPassword)
                 .email(userRegisterRequest.getEmail())
                 .build();
         userRepository.save(user);

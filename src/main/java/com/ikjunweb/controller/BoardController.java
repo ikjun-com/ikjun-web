@@ -6,8 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class BoardController {
 
-    @GetMapping("/ikjun/main")
-    public String index() {
+    @GetMapping("/ikjun")
+    public String home() {
         return "home";
+    }
+
+    @GetMapping("/index")
+    public String index() {
+        return "index";
     }
 }
