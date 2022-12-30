@@ -5,14 +5,21 @@
   <title>register</title>
 </head>
 <body>
-  <h1>register page</h1>
+<h1>register page</h1>
 <hr>
-<form action="/ikjun/user/register" method="post">
-  <input type="text" name="username" placeholder="username"> <br>
-  <input type="text" name="password" placeholder="password"> <br>
-  <input type="text" name="email" placeholder="email"> <br>
-  <input type="text" name="nickname" placeholder="nickname"> <br>
-  <button>register</button>
+<form>
+  <div>
+    <input type="text" name="username" id="username" placeholder="username">
+    <input type="button" id="usernameOverlay" onclick="usernameCheck()" value="중복 확인">
+    <br>
+  </div>
+  <input type="text" name="password" id="password" placeholder="password"> <br>
+  <input type="text" name="email" id="email" placeholder="email"> <br>
+  <input type="text" name="nickname" id="nickname" placeholder="nickname"> <br>
 </form>
+<button id="register">register</button>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="/registerForm.js"></script>
+<script type="text/javascript" src="/overlapCheck.js"></script>
 </body>
 </html>

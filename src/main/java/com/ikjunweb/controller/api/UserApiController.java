@@ -1,4 +1,4 @@
-package com.ikjunweb.apicontroller;
+package com.ikjunweb.controller.api;
 
 import com.ikjunweb.requestdto.UserDeleteRequest;
 import com.ikjunweb.requestdto.UserLoginRequest;
@@ -29,15 +29,16 @@ public class UserApiController {
     public ResponseEntity<UserRegisterResponse> register(@RequestBody UserRegisterRequest userRegisterRequest) {
         UserRegisterResponse userRegisterResponse = userService.register(userRegisterRequest);
 
-        if(userRegisterResponse.getHttpStatus() == HttpStatus.BAD_REQUEST) return new ResponseEntity<>(userRegisterResponse, HttpStatus.BAD_REQUEST);
+        if(userRegisterResponse.getHttpStatus() != HttpStatus.OK) return new ResponseEntity<>(userRegisterResponse, userRegisterResponse.getHttpStatus());
         return new ResponseEntity<>(userRegisterResponse, HttpStatus.OK);
     }
 
+    //버리는 컨트롤러 !사용하지 말걸!
     @PostMapping("/ikjun/user/login")
     public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) {
         UserLoginResponse userLoginResponse = userService.login(userLoginRequest);
 
-        if(userLoginResponse.getHttpStatus() == HttpStatus.BAD_REQUEST) return new ResponseEntity<>(userLoginResponse, HttpStatus.BAD_REQUEST);
+        if(userLoginResponse.getHttpStatus() != HttpStatus.OK) return new ResponseEntity<>(userLoginResponse, userLoginResponse.getHttpStatus());
         return new ResponseEntity<>(userLoginResponse, HttpStatus.OK);
     }
 
@@ -45,7 +46,7 @@ public class UserApiController {
     public ResponseEntity<UserUpdateResponse> update(@PathVariable Long id, @RequestBody UserUpdateRequest userUpdateRequest) {
         UserUpdateResponse userUpdateResponse = userService.update(id, userUpdateRequest);
 
-        if(userUpdateResponse.getHttpStatus() == HttpStatus.BAD_REQUEST) return new ResponseEntity<>(userUpdateResponse, HttpStatus.BAD_REQUEST);
+        if(userUpdateResponse.getHttpStatus() != HttpStatus.OK) return new ResponseEntity<>(userUpdateResponse, userUpdateResponse.getHttpStatus());
         return new ResponseEntity<>(userUpdateResponse, HttpStatus.OK);
     }
 
@@ -53,7 +54,7 @@ public class UserApiController {
     public ResponseEntity<UserDeleteResponse> delete(@PathVariable Long id, @RequestBody UserDeleteRequest userDeleteRequest) {
         UserDeleteResponse userDeleteResponse = userService.delete(id, userDeleteRequest);
 
-        if(userDeleteResponse.getHttpStatus() == HttpStatus.BAD_REQUEST) return new ResponseEntity<>(userDeleteResponse, HttpStatus.BAD_REQUEST);
+        if(userDeleteResponse.getHttpStatus() != HttpStatus.OK) return new ResponseEntity<>(userDeleteResponse, userDeleteResponse.getHttpStatus());
         return new ResponseEntity<>(userDeleteResponse, HttpStatus.OK);
     }
 }

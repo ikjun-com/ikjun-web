@@ -1,4 +1,4 @@
-package com.ikjunweb.apicontroller;
+package com.ikjunweb.controller.api;
 
 import org.springframework.stereotype.Controller;
 

@@ -1,6 +1,7 @@
 package com.ikjunweb.service;
 
 import com.ikjunweb.entity.User;
+import com.ikjunweb.entity.UserRole;
 import com.ikjunweb.repository.UserRepository;
 import com.ikjunweb.requestdto.UserDeleteRequest;
 import com.ikjunweb.requestdto.UserLoginRequest;
@@ -15,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
 
 @Service
 public class UserService {
@@ -105,6 +108,8 @@ public class UserService {
                 .username(userRegisterRequest.getUsername())
                 .password(encPassword)
                 .email(userRegisterRequest.getEmail())
+                .provider("ikjun")
+                .userRole(UserRole.USER)
                 .build();
         userRepository.save(user);
 
@@ -163,5 +168,23 @@ public class UserService {
         }
         if(charCount == 0 || intCount == 0) return false;
         return true;
+    }
+
+    public HashMap<String, Object> usernameOverlap(String username) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("result", userRepository.existsByUsername(username));
+        return map;
+    }
+
+    public HashMap<String, Object> emailOverlap(String email) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("result", userRepository.existsByEmail(email));
+        return map;
+    }
+
+    public HashMap<String, Object> nicknameOverlap(String nickname) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("result", userRepository.existsByNickname(nickname));
+        return map;
     }
 }
