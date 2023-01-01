@@ -10,12 +10,20 @@
 <form>
   <div>
     <input type="text" name="username" id="username" placeholder="username">
-    <input type="button" id="usernameOverlay" onclick="usernameCheck()" value="중복 확인">
+    <button type="button" id="usernameCheck" class="usernameCheck" value="N">중복 확인</button>
     <br>
   </div>
-  <input type="text" name="password" id="password" placeholder="password"> <br>
-  <input type="text" name="email" id="email" placeholder="email"> <br>
-  <input type="text" name="nickname" id="nickname" placeholder="nickname"> <br>
+  <div>
+    <input type="text" name="password" id="password" placeholder="password"> <br>
+  </div>
+  <div>
+    <input type="text" name="email" id="email" placeholder="email">
+    <button type="button" id="emailCheck" class="emailCheck" value="N">중복 확인</button> <br>
+  </div>
+  <div>
+    <input type="text" name="nickname" id="nickname" placeholder="nickname">
+    <button type="button" id="nicknameCheck" class="nicknameCheck" value="N">중복 확인</button> <br>
+  </div>
 </form>
 <button id="register">register</button>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>

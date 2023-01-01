@@ -24,13 +24,26 @@ public class FormController {
         return "registerForm";
     }
 
-    @PostMapping("/ikjun/registerForm/username")
-    public HashMap<String, Object> usernameOverlap(@RequestBody String username) {
-        return userService.usernameOverlap(username);
-    }
-
     @GetMapping("/ikjun/loginForm")
     public String loginForm() {
         return "loginForm";
+    }
+
+    @PostMapping("/ikjun/loginForm/usernameCheck")
+    public int usernameCheck(String username) {
+        int result = userService.isUsernameOverlap(username);
+        return result;
+    }
+
+    @PostMapping("/ikjun/loginForm/emailCheck")
+    public int emailCheck(String email) {
+        int result = userService.isEmailOverLap(email);
+        return result;
+    }
+
+    @PostMapping("/ikjun/loginForm/nickNameCheck")
+    public int nickNameCheck(String nickname) {
+        int result = userService.isNicknameOverLap(nickname);
+        return result;
     }
 }

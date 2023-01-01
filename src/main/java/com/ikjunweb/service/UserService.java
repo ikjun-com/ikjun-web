@@ -170,21 +170,21 @@ public class UserService {
         return true;
     }
 
-    public HashMap<String, Object> usernameOverlap(String username) {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("result", userRepository.existsByUsername(username));
-        return map;
+    @Transactional
+    public int isUsernameOverlap(String username) {
+        int exist = userRepository.existsByUsername(username);
+        return exist;
     }
 
-    public HashMap<String, Object> emailOverlap(String email) {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("result", userRepository.existsByEmail(email));
-        return map;
+    @Transactional
+    public int isEmailOverLap(String email) {
+        int exist = userRepository.existsByEmail(email);
+        return exist;
     }
 
-    public HashMap<String, Object> nicknameOverlap(String nickname) {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("result", userRepository.existsByNickname(nickname));
-        return map;
+    @Transactional
+    public int isNicknameOverLap(String nickname) {
+        int exist = userRepository.existsByNickname(nickname);
+        return exist;
     }
 }
