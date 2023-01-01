@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .logout().logoutSuccessUrl("/")
                 .and()
                 .oauth2Login(form -> form
-                        .loginPage("/loginForm")    //구글 로그인이 완료되면 엑세스토큰과 사용자 프로필정보를 받음
+                        .loginPage("/ikjun/loginForm")    //구글 로그인이 완료되면 엑세스토큰과 사용자 프로필정보를 받음
                         .userInfoEndpoint()
                         .userService(principalOAuth2UserService))
                 .logout().logoutSuccessUrl("/")
