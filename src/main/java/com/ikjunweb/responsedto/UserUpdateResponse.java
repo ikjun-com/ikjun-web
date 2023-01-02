@@ -12,7 +12,5 @@ import org.springframework.http.HttpStatus;
 @Builder
 public class UserUpdateResponse {
     private String nickname;
-    private String username;
-    private String email;
     private HttpStatus httpStatus;
 }

@@ -59,17 +59,10 @@ public class UserService {
             return new IllegalArgumentException("수정 실패");
         });
 
-        String rawPassword = userUpdateRequest.getPassword();
-        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+        user.editUser(userUpdateRequest.getNickname());
 
-        user.setNickname(userUpdateRequest.getNickname());
-        user.setUsername(userUpdateRequest.getUsername());
-        user.setPassword(encPassword);
-        user.setEmail(userUpdateRequest.getEmail());
         UserUpdateResponse userUpdateResponse = UserUpdateResponse.builder()
                 .nickname(user.getNickname())
-                .username(user.getUsername())
-                .email(user.getEmail())
                 .httpStatus(HttpStatus.OK)
                 .build();
         return userUpdateResponse;
@@ -137,14 +130,7 @@ public class UserService {
 
     private boolean validateUserUpdate(UserUpdateRequest userUpdateRequest) {
         String nickname = userUpdateRequest.getNickname();
-        String username = userUpdateRequest.getUsername();
-        String password = userUpdateRequest.getPassword();
-        String email = userUpdateRequest.getEmail();
-        if(username.length() < 5 || password.length() < 5) {
-            return false;
-        }
-        if(isNullAndEmpty(nickname) || isNullAndEmpty(email) || isNullAndEmpty(username) || isNullAndEmpty(password)) return false;
-        if(!isCombination(username) || !isCombination(password)) return false;
+        if(isNullAndEmpty(nickname)) return false;
         return true;
     }
 
@@ -171,20 +157,20 @@ public class UserService {
     }
 
     @Transactional
-    public int isUsernameOverlap(String username) {
-        int exist = userRepository.existsByUsername(username);
+    public boolean isUsernameOverlap(String username) {
+        boolean exist = userRepository.existsByUsername(username);
         return exist;
     }
 
     @Transactional
-    public int isEmailOverLap(String email) {
-        int exist = userRepository.existsByEmail(email);
+    public boolean isEmailOverLap(String email) {
+        boolean exist = userRepository.existsByEmail(email);
         return exist;
     }
 
     @Transactional
-    public int isNicknameOverLap(String nickname) {
-        int exist = userRepository.existsByNickname(nickname);
+    public boolean isNicknameOverLap(String nickname) {
+        boolean exist = userRepository.existsByNickname(nickname);
         return exist;
     }
 }

@@ -18,9 +18,9 @@ let start = {
             dataType: "JSON",
             data: {"username": $("#username").val()},
             success: function(result) {
-                if(result == 1) {
+                if(result == true) {
                     alert("아이디 중복")
-                } else if(result == 0) {
+                } else if(result == false) {
                     $("usernameCheck").attr("value", "Y")
                     alert("사용가능한 아이디")
                 }
@@ -35,9 +35,9 @@ let start = {
             dataType: "JSON",
             data: {"email": $("#email").val()},
             success: function(result) {
-                if(result == 1) {
+                if(result == true) {
                     alert("이메일 중복")
-                } else if(result == 0) {
+                } else if(result == false) {
                     $("emailCheck").attr("value", "Y")
                     alert("사용가능한 이메일")
                 }
@@ -51,9 +51,9 @@ let start = {
             type: "POST",
             dataType: "JSON",
             success: function(result) {
-                if(result == 1) {
+                if(result == true) {
                     alert("닉네임 중복")
-                } else if(result == 0) {
+                } else if(result == false) {
                     $("nicknameCheck").attr("value", "Y")
                     alert("사용가능한 닉네임")
                 }

@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter
 @Builder
 @Entity
 public class User extends BaseEntity {
@@ -30,9 +30,20 @@ public class User extends BaseEntity {
     @Column
     private String provider;
 
+
+
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
     @Column
-    private int star;
+    private Integer star;
+
+    public void editUser(String nickname) {
+        this.username = username;
+    }
+
+    @PrePersist
+    public void perPersist() {
+        this.star = this.star == null ? 0 : this.star;
+    }
 }
