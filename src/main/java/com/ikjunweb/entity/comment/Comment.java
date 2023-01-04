@@ -1,6 +1,8 @@
-package com.ikjunweb.entity;
+package com.ikjunweb.entity.comment;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
+import com.ikjunweb.entity.BaseEntity;
+import com.ikjunweb.entity.board.Board;
+import com.ikjunweb.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,13 +1,13 @@
 package com.ikjunweb.controller.api;
 
-import com.ikjunweb.requestdto.UserDeleteRequest;
-import com.ikjunweb.requestdto.UserLoginRequest;
-import com.ikjunweb.requestdto.UserRegisterRequest;
-import com.ikjunweb.requestdto.UserUpdateRequest;
-import com.ikjunweb.responsedto.UserDeleteResponse;
-import com.ikjunweb.responsedto.UserLoginResponse;
-import com.ikjunweb.responsedto.UserRegisterResponse;
-import com.ikjunweb.responsedto.UserUpdateResponse;
+import com.ikjunweb.requestdto.user.UserDeleteRequest;
+import com.ikjunweb.requestdto.user.UserLoginRequest;
+import com.ikjunweb.requestdto.user.UserRegisterRequest;
+import com.ikjunweb.requestdto.user.UserUpdateRequest;
+import com.ikjunweb.responsedto.user.UserDeleteResponse;
+import com.ikjunweb.responsedto.user.UserLoginResponse;
+import com.ikjunweb.responsedto.user.UserRegisterResponse;
+import com.ikjunweb.responsedto.user.UserUpdateResponse;
 import com.ikjunweb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,15 +31,6 @@ public class UserApiController {
 
         if(userRegisterResponse.getHttpStatus() != HttpStatus.OK) return new ResponseEntity<>(userRegisterResponse, userRegisterResponse.getHttpStatus());
         return new ResponseEntity<>(userRegisterResponse, HttpStatus.OK);
-    }
-
-    //버리는 컨트롤러 !사용하지 말걸!
-    @PostMapping("/ikjun/user/login")
-    public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) {
-        UserLoginResponse userLoginResponse = userService.login(userLoginRequest);
-
-        if(userLoginResponse.getHttpStatus() != HttpStatus.OK) return new ResponseEntity<>(userLoginResponse, userLoginResponse.getHttpStatus());
-        return new ResponseEntity<>(userLoginResponse, HttpStatus.OK);
     }
 
     @PutMapping("/ikjun/user/{id}")

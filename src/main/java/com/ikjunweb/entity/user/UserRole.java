@@ -1,4 +1,4 @@
-package com.ikjunweb.entity;
+package com.ikjunweb.entity.user;
 
 public enum UserRole {
     USER,

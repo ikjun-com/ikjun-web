@@ -39,14 +39,14 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/ikjun/loginForm")
                         .loginProcessingUrl("/ikjun/login")   // /login이 호출되면 시큐리티가 낚아채어 대신 로그인 진행해줌
-                        .defaultSuccessUrl("/"))
-                .logout().logoutSuccessUrl("/")
+                        .defaultSuccessUrl("/ikjun"))
+                .logout().logoutSuccessUrl("/ikjun")
                 .and()
                 .oauth2Login(form -> form
                         .loginPage("/ikjun/loginForm")    //구글 로그인이 완료되면 엑세스토큰과 사용자 프로필정보를 받음
                         .userInfoEndpoint()
                         .userService(principalOAuth2UserService))
-                .logout().logoutSuccessUrl("/")
+                .logout().logoutSuccessUrl("/ikjun")
                 .and()
                 .build();
     }

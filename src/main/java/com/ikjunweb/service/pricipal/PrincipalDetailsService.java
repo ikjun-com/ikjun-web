@@ -1,7 +1,7 @@
 package com.ikjunweb.service.pricipal;
 
 import com.ikjunweb.config.auth.PrincipalDetails;
-import com.ikjunweb.entity.User;
+import com.ikjunweb.entity.user.User;
 import com.ikjunweb.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

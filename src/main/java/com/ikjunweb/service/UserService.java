@@ -1,23 +1,21 @@
 package com.ikjunweb.service;
 
-import com.ikjunweb.entity.User;
-import com.ikjunweb.entity.UserRole;
+import com.ikjunweb.entity.user.User;
+import com.ikjunweb.entity.user.UserRole;
 import com.ikjunweb.repository.UserRepository;
-import com.ikjunweb.requestdto.UserDeleteRequest;
-import com.ikjunweb.requestdto.UserLoginRequest;
-import com.ikjunweb.requestdto.UserRegisterRequest;
-import com.ikjunweb.requestdto.UserUpdateRequest;
-import com.ikjunweb.responsedto.UserDeleteResponse;
-import com.ikjunweb.responsedto.UserLoginResponse;
-import com.ikjunweb.responsedto.UserRegisterResponse;
-import com.ikjunweb.responsedto.UserUpdateResponse;
+import com.ikjunweb.requestdto.user.UserDeleteRequest;
+import com.ikjunweb.requestdto.user.UserLoginRequest;
+import com.ikjunweb.requestdto.user.UserRegisterRequest;
+import com.ikjunweb.requestdto.user.UserUpdateRequest;
+import com.ikjunweb.responsedto.user.UserDeleteResponse;
+import com.ikjunweb.responsedto.user.UserLoginResponse;
+import com.ikjunweb.responsedto.user.UserRegisterResponse;
+import com.ikjunweb.responsedto.user.UserUpdateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashMap;
 
 @Service
 public class UserService {
@@ -32,7 +30,7 @@ public class UserService {
 
     @Transactional
     public UserDeleteResponse delete(Long id, UserDeleteRequest userDeleteRequest) {
-        User user = userRepository.findByUsernameAndPassword(userDeleteRequest.getUsername(), userDeleteRequest.getPassword());
+        User user = userRepository.findByUsernameAndEmail(userDeleteRequest.getUsername(), userDeleteRequest.getEmail());
         if(user == null) {
             UserDeleteResponse userDeleteResponse = UserDeleteResponse.builder()
                     .httpStatus(HttpStatus.BAD_REQUEST)
@@ -66,22 +64,6 @@ public class UserService {
                 .httpStatus(HttpStatus.OK)
                 .build();
         return userUpdateResponse;
-    }
-
-    @Transactional
-    public UserLoginResponse login(UserLoginRequest userLoginRequest) {
-        User user = userRepository.findByUsernameAndPassword(userLoginRequest.getUsername(), userLoginRequest.getPassword());
-        if(user == null) {
-            UserLoginResponse userLoginResponse = UserLoginResponse.builder()
-                    .httpStatus(HttpStatus.BAD_REQUEST)
-                    .build();
-            return userLoginResponse;
-        }
-        UserLoginResponse userLoginResponse = UserLoginResponse.builder()
-                .nickname(user.getNickname())
-                .httpStatus(HttpStatus.OK)
-                .build();
-        return userLoginResponse;
     }
 
     @Transactional

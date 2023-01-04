@@ -1,7 +1,6 @@
 package com.ikjunweb;
 
-import com.ikjunweb.entity.UserRole;
-import org.assertj.core.api.Assertions;
+import com.ikjunweb.entity.user.UserRole;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;

@@ -1,10 +1,11 @@
-package com.ikjunweb.entity;
+package com.ikjunweb.entity.board;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
+import com.ikjunweb.entity.BaseEntity;
+import com.ikjunweb.entity.comment.Comment;
+import com.ikjunweb.entity.user.User;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

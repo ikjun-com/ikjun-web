@@ -1,7 +1,7 @@
-package com.ikjunweb.entity;
+package com.ikjunweb.entity.user;
 
+import com.ikjunweb.entity.BaseEntity;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -29,8 +29,6 @@ public class User extends BaseEntity {
 
     @Column
     private String provider;
-
-
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole;

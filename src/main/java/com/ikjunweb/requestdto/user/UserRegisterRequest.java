@@ -1,4 +1,4 @@
-package com.ikjunweb.requestdto;
+package com.ikjunweb.requestdto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserLoginRequest {
+public class UserRegisterRequest {
+    private String nickname;
     private String username;
     private String password;
+    private String email;
 }

@@ -1,5 +1,6 @@
-package com.ikjunweb.entity;
+package com.ikjunweb.entity.board;
 
+import com.ikjunweb.entity.user.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,14 +10,15 @@ import javax.persistence.*;
 @Getter
 @Builder
 @Entity
-public class BoardTag {
+public class BoardLike {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String name;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "boardId")
     private Board board;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId")
+    private User user;
 }

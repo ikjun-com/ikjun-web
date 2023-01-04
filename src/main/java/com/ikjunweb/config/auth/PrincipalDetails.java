@@ -1,7 +1,8 @@
 package com.ikjunweb.config.auth;
 
-import com.ikjunweb.entity.User;
+import com.ikjunweb.entity.user.User;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -13,7 +14,7 @@ import java.util.Map;
 @Data
 public class PrincipalDetails implements UserDetails, OAuth2User {
 
-    private User user;
+    private User user = null;
     private Map<String, Object> attributes;
 
     public PrincipalDetails(User user) {
@@ -55,6 +56,18 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     @Override
     public String getUsername() {
         return user.getUsername();
+    }
+
+    public String getNickname() {
+        return user.getNickname();
+    }
+
+    public String getEmail() {
+        return user.getEmail();
+    }
+
+    public User getUser() {
+        return user;
     }
 
     @Override

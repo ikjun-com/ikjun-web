@@ -1,4 +1,4 @@
-package com.ikjunweb.responsedto;
+package com.ikjunweb.responsedto.board;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserUpdateResponse {
+public class BoardWriteResponse {
+    private String title;
+    private String subject;
     private String nickname;
     private HttpStatus httpStatus;
 }

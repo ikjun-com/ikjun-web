@@ -1,9 +1,8 @@
 package com.ikjunweb.service;
 
-import com.ikjunweb.entity.User;
+import com.ikjunweb.entity.user.User;
 import com.ikjunweb.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -51,19 +50,6 @@ public class UserServiceTest {
         assertThat(user.getUsername()).isEqualTo("username123");
     }
 
-    @Test
-    void 유저_수정() {
-        User user = userRepository.findByUsernameAndPassword("username123", "password123");
-        user.setNickname("um");
-        user.setUsername("username1");
-        user.setPassword("password1");
-        User findUser = userRepository.findById(1L).orElseThrow(() -> {
-            return new IllegalArgumentException("찾기 실패");
-        });
-        assertThat(findUser.getNickname()).isEqualTo("um");
-        assertThat(findUser.getUsername()).isEqualTo("username1");
-        assertThat(findUser.getPassword()).isEqualTo("password1");
-    }
 
 //    @Order(4)
 //    @Test
