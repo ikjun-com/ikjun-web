@@ -33,9 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/ikjun/user/{nickname}")
-    public String userDetail(@PathVariable String nickname, HttpSession session, Model model) {
-        User user = (User) session.getAttribute("user");
-        model.addAttribute("user", user);
+    public String userDetail(@PathVariable String nickname) {
         return "/user/userDetail";
     }
 
@@ -54,7 +52,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @PostMapping("/ikjun/loginForm/nickNameCheck")
+    @PostMapping("/ikjun/loginForm/nicknameCheck")
     public boolean nickNameCheck(String nickname) {
         boolean result = userService.isNicknameOverLap(nickname);
         return result;

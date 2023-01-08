@@ -5,6 +5,10 @@ import com.ikjunweb.entity.board.Board;
 import com.ikjunweb.entity.user.User;
 import com.ikjunweb.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -25,22 +29,17 @@ public class BoardController {
     }
 
     @GetMapping("/ikjun")
-    public String home(Authentication authentication, Model model, HttpSession session) throws NullPointerException{
-        boolean isLogined;
-        User user = null;
-        if(authentication == null) {
-            isLogined = false;
-            model.addAttribute("user", user);
-            model.addAttribute("isLogined", isLogined);
-        } else {
-            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-            user = principalDetails.getUser();
-            isLogined = true;
-            model.addAttribute("user", user);
-            model.addAttribute("isLogined", isLogined);
-            session.setAttribute("user", user);
-        }
+    public String home(Authentication authentication, Model model, HttpSession session,
+                       @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<Board> boards = boardService.boardList(pageable);
+        model.addAttribute("boards", boards);
 
+        if(authentication != null) {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            String nickname = principalDetails.getNickname();
+            session.setAttribute("nickname", nickname);
+            model.addAttribute("nickname", nickname);
+        }
         return "home";
     }
 
@@ -50,15 +49,14 @@ public class BoardController {
     }
 
     @GetMapping("/ikjun/board/writeForm")
-    public String writeForm(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
-        model.addAttribute("username", principalDetails.getUsername());
-        model.addAttribute("email", principalDetails.getEmail());
+    public String writeForm() {
         return "board/writeForm";
     }
 
-    @GetMapping("/ikjun/board/{id}")
-    public String boardDetail(@PathVariable Long id) {
+    @GetMapping("/ikjun/board/{boardId}")
+    public String boardDetail(@PathVariable Long id, Model model) {
         Board board = boardService.findBoard(id);
-        return "/board/boardDetail";
+        model.addAttribute("board", board);
+        return "board/boardDetail";
     }
 }

@@ -1,13 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
 </head>
 <body>
-  <li th:if="${isLogined}">
-    <a th:text="${user.nickname}" th:href="@{/ikjun/user/{userNickname}(userNickname=${user.nickname})}"></a>
-  </li>
+  <div sec:authorize-expr="isAuthenticated()">
+    <a sec:authentication="principal.nickname" th:href="@{/ikjun/user/{userNickname}(userNickname=${nickname})}"></a>
+  </div>
   <h2>ikjun</h2>
+<a href="/ikjun/loginForm">로그인</a>
+<div sec:authorize-expr="isAuthenticated()">
+  <a th:href="@{/logout}">로그아웃</a>
+  <a th:href="@{/ikjun/board/writeForm}">글쓰기</a>
+</div>
+<div>
+<tbody>
+<tr th:each="board:${boards}">
+  <td><a th:href="@{/ikjun/board/{boardId}(boardId=${board.id})}" th:text="${board.title}"></a></td>
+  <td><a th:text="${board.major}"></a></td>
+  <td><a th:text="${board.user.nickname}"></a></td>
+</tr>
+</tbody>
+</div>
 </body>
 </html>

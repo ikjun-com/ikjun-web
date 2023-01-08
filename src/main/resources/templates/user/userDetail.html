@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <title>user detail</title>
 </head>
 <body>
-<a th:text="${user.username}"></a> <br>
-<a th:text="${user.password}"></a> <br>
-<a th:text="${user.nickname}"></a> <br>
-<a th:text="${user.email}"></a> <br>
+<a sec:authentication="principal.username"></a> <br>
+<a sec:authentication="principal.password"></a> <br>
+<a sec:authentication="principal.email"></a> <br>
+<a sec:authentication="principal.nickname"></a> <br>
 </body>
 </html>
