@@ -69,6 +69,14 @@ public class Board extends BaseEntity {
         this.subject = subject;
     }
 
+    public void addLike(BoardLike boardLike) {
+        this.likes.add(boardLike);
+    }
+
+    public void increaseViewCount() {
+        this.viewCount = viewCount + 1;
+    }
+
     public void increaseLikeCount() {
         this.likeCount = likeCount + 1;
     }

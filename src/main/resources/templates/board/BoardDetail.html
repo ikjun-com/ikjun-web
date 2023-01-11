@@ -11,12 +11,22 @@
     <div th:utext="${board.content}"></div>
   </div>
 </main>
-<a th:text="|explanation: ${board.explanation}|"></a> <br>
-<a th:text="|answer: ${board.answer}|"></a> <br>
-<a th:text="|likeCount: ${board.likeCount}|"></a> <br>
-<a th:text="|HateCount: ${board.HateCount}|"></a> <br>
-<a th:text="|major: ${board.major}|"></a> <br>
-<a th:text="|subject: ${board.subject}|"></a> <br>
-<a th:text="|viewCount: ${board.viewCount}|"></a> <br>
+<div>
+  <a th:text="|explanation: ${board.explanation}|"></a> <br>
+  <a th:text="|answer: ${board.answer}|"></a> <br>
+  <a th:text="|likeCount: ${board.likeCount}|"></a> <br>
+  <a th:text="|HateCount: ${board.HateCount}|"></a> <br>
+  <a th:text="|major: ${board.major}|"></a> <br>
+  <a th:text="|subject: ${board.subject}|"></a> <br>
+  <a th:text="|viewCount: ${board.viewCount}|"></a> <br>
+</div>
+<div>
+  <form th:action="@{/ikjun/board/{boardId}(boardId=${board.id})/like}" method="post">
+    <button type="submit">like</button>
+  </form>
+  <form th:action="@{/ikjun/board/{boardId}(boardId=${board.id})/disLike}" method="post">
+    <button type="submit">disLike</button>
+  </form>
+</div>
 </body>
 </html>

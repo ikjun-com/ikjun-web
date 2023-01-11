@@ -16,6 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -54,9 +57,39 @@ public class BoardController {
     }
 
     @GetMapping("/ikjun/board/{boardId}")
-    public String boardDetail(@PathVariable Long boardId, Model model) {
+    public String boardDetail(@PathVariable Long boardId, Model model, HttpServletRequest request, HttpServletResponse response) {
         Board board = boardService.findBoard(boardId);
         model.addAttribute("board", board);
+
+        viewCountUp(boardId, request, response);
         return "board/boardDetail";
+    }
+
+    private void viewCountUp(Long id, HttpServletRequest request, HttpServletResponse response) {
+        Cookie oldCookie = null;
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for (Cookie cookie : cookies) {
+                if(cookie.getName().equals("postView")) {
+                    oldCookie = cookie;
+                }
+            }
+        }
+
+        if (oldCookie != null) {
+            if (!oldCookie.getValue().contains("[" + id.toString() + "]")) {
+                boardService.viewCountUp(id);
+                oldCookie.setValue(oldCookie.getValue() + "_[" + id + "]");
+                oldCookie.setPath("/");
+                oldCookie.setMaxAge(60 * 60 * 24);
+                response.addCookie(oldCookie);
+            }
+        } else {
+            boardService.viewCountUp(id);
+            Cookie newCookie = new Cookie("postView","[" + id + "]");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 24);
+            response.addCookie(newCookie);
+        }
     }
 }
