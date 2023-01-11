@@ -37,7 +37,7 @@ public class User extends BaseEntity {
     private Integer star;
 
     public void editUser(String nickname) {
-        this.username = username;
+        this.nickname = nickname;
     }
 
     @PrePersist

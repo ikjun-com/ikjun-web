@@ -6,7 +6,7 @@
 </head>
 <body>
   <div sec:authorize-expr="isAuthenticated()">
-    <a sec:authentication="principal.nickname" th:href="@{/ikjun/user/{userNickname}(userNickname=${nickname})}"></a>
+    <a sec:authentication="principal.nickname" th:href="@{/ikjun/user/myprofile}"></a>
   </div>
   <h2>ikjun</h2>
 <a href="/ikjun/loginForm">로그인</a>

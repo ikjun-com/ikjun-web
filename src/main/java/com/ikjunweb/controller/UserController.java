@@ -5,10 +5,7 @@ import com.ikjunweb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -32,28 +29,28 @@ public class UserController {
         return "loginForm";
     }
 
-    @GetMapping("/ikjun/user/{nickname}")
-    public String userDetail(@PathVariable String nickname) {
-        return "/user/userDetail";
+    @GetMapping("/ikjun/user/myprofile")
+    public String userDetail() {
+        return "/user/myprofile";
     }
 
     @ResponseBody
     @PostMapping("/ikjun/loginForm/usernameCheck")
-    public boolean usernameCheck(String username) {
+    public boolean usernameCheck(@RequestParam("username") String username) {
         boolean result = userService.isUsernameOverlap(username);
         return result;
     }
 
     @ResponseBody
     @PostMapping("/ikjun/loginForm/emailCheck")
-    public boolean emailCheck(String email) {
+    public boolean emailCheck(@RequestParam("email") String email) {
         boolean result = userService.isEmailOverLap(email);
         return result;
     }
 
     @ResponseBody
     @PostMapping("/ikjun/loginForm/nicknameCheck")
-    public boolean nickNameCheck(String nickname) {
+    public boolean nickNameCheck(@RequestParam("nickname") String nickname) {
         boolean result = userService.isNicknameOverLap(nickname);
         return result;
     }

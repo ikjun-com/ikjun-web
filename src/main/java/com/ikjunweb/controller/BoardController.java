@@ -54,8 +54,8 @@ public class BoardController {
     }
 
     @GetMapping("/ikjun/board/{boardId}")
-    public String boardDetail(@PathVariable Long id, Model model) {
-        Board board = boardService.findBoard(id);
+    public String boardDetail(@PathVariable Long boardId, Model model) {
+        Board board = boardService.findBoard(boardId);
         model.addAttribute("board", board);
         return "board/boardDetail";
     }

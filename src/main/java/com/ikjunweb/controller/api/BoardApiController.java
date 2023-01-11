@@ -31,4 +31,7 @@ public class BoardApiController {
 
         return new ResponseEntity<>(boardWriteResponse, boardWriteResponse.getHttpStatus());
     }
+
+    @PostMapping("/ikjun/board/{id}/like")
+    public
 }

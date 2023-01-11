@@ -16,6 +16,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
 
@@ -35,7 +37,7 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
         if(userRequest.getClientRegistration().getRegistrationId().equals("google")) {
             oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
         } else if(userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
-            oAuth2UserInfo = new NaverUserInfo(oAuth2User.getAttributes());
+            oAuth2UserInfo = new NaverUserInfo((Map) oAuth2User.getAttributes().get("response"));
         }
 
         String provider = oAuth2UserInfo.getProvider();

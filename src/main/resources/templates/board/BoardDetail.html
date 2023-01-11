@@ -5,14 +5,18 @@
   <title>board detail</title>
 </head>
 <body>
-<a th:text="'title' + ${board.title}"></a> <br>
-<a th:utext="${board.content}"></a> <br>
-<a th:text="$'explanation' + {board.explanation}"></a> <br>
-<a th:text="'answer: ' + ${board.answer}"></a> <br>
-<a th:text="'likeCount' + ${board.likeCount}"></a> <br>
-<a th:text="'HateCount' + ${board.HateCount}"></a> <br>
-<a th:text="'major' + ${board.major}"></a> <br>
-<a th:text="'subject' + ${board.subject}"></a> <br>
-<a th:text="'viewCount' + ${board.viewCount}"></a> <br>
+<a th:text="|title: ${board.title}|"></a> <br>
+<main role="main" class="container">
+  <div class="starter-template">
+    <div th:utext="${board.content}"></div>
+  </div>
+</main>
+<a th:text="|explanation: ${board.explanation}|"></a> <br>
+<a th:text="|answer: ${board.answer}|"></a> <br>
+<a th:text="|likeCount: ${board.likeCount}|"></a> <br>
+<a th:text="|HateCount: ${board.HateCount}|"></a> <br>
+<a th:text="|major: ${board.major}|"></a> <br>
+<a th:text="|subject: ${board.subject}|"></a> <br>
+<a th:text="|viewCount: ${board.viewCount}|"></a> <br>
 </body>
 </html>
