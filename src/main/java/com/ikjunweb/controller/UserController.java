@@ -1,8 +1,11 @@
 package com.ikjunweb.controller;
 
+import com.ikjunweb.config.auth.PrincipalDetail;
 import com.ikjunweb.entity.user.User;
 import com.ikjunweb.service.UserService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +33,9 @@ public class UserController {
     }
 
     @GetMapping("/ikjun/user/myprofile")
-    public String userDetail() {
+    public String userDetail(@AuthenticationPrincipal PrincipalDetail principalDetail, Model model) {
+        User user = principalDetail.getUser();
+        model.addAttribute("likes", user.getLikes());
         return "/user/myprofile";
     }
 

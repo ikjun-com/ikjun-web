@@ -2,7 +2,6 @@ package com.ikjunweb.config.auth;
 
 import com.ikjunweb.entity.user.User;
 import lombok.Data;
-import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -12,16 +11,16 @@ import java.util.Collection;
 import java.util.Map;
 
 @Data
-public class PrincipalDetails implements UserDetails, OAuth2User {
+public class PrincipalDetail implements UserDetails, OAuth2User {
 
     private User user = null;
     private Map<String, Object> attributes;
 
-    public PrincipalDetails(User user) {
+    public PrincipalDetail(User user) {
         this.user = user;
     }
 
-    public PrincipalDetails(User user, Map<String, Object> attributes) {
+    public PrincipalDetail(User user, Map<String, Object> attributes) {
         this.user = user;
         this.attributes = attributes;
     }

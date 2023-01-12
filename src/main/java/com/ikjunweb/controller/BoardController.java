@@ -1,8 +1,7 @@
 package com.ikjunweb.controller;
 
-import com.ikjunweb.config.auth.PrincipalDetails;
+import com.ikjunweb.config.auth.PrincipalDetail;
 import com.ikjunweb.entity.board.Board;
-import com.ikjunweb.entity.user.User;
 import com.ikjunweb.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,8 +36,8 @@ public class BoardController {
         model.addAttribute("boards", boards);
 
         if(authentication != null) {
-            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-            String nickname = principalDetails.getNickname();
+            PrincipalDetail principalDetail = (PrincipalDetail) authentication.getPrincipal();
+            String nickname = principalDetail.getNickname();
             session.setAttribute("nickname", nickname);
             model.addAttribute("nickname", nickname);
         }

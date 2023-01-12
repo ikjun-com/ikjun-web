@@ -10,6 +10,7 @@ import com.ikjunweb.requestdto.board.BoardLikeRequest;
 import com.ikjunweb.requestdto.board.BoardWriteRequest;
 import com.ikjunweb.responsedto.board.BoardLikeResponse;
 import com.ikjunweb.responsedto.board.BoardWriteResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class BoardService {
 
@@ -122,11 +124,34 @@ public class BoardService {
         if (findLike == null) {
             boardLikeRepository.save(boardLike);
             board.addLike(boardLike);
+
+            System.out.println(user.getNickname() + ": likes");
+            for (BoardLike like : user.getLikes()) {
+                log.warn("{}", like.getId());
+            }
+
+            System.out.println(board.getTitle() + ": likes");
+            for (BoardLike like : board.getLikes()) {
+                log.warn("{}", like.getId());
+            }
+
             board.increaseLikeCount();
             cancel = false;
         } else {
+            user.removeLike(findLike);
+            board.removeLike(findLike);
             boardLikeRepository.delete(findLike);
-            board.removeLike(boardLike);
+
+            System.out.println(user.getNickname() + ": likes");
+            for (BoardLike like : user.getLikes()) {
+                log.warn("{}", like.getId());
+            }
+
+            System.out.println(board.getTitle() + ": likes");
+            for (BoardLike like : board.getLikes()) {
+                log.warn("{}", like.getId());
+            }
+
             board.decreaseLikeCount();
             cancel = true;
         }

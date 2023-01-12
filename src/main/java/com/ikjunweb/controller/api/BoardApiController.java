@@ -1,14 +1,12 @@
 package com.ikjunweb.controller.api;
 
-import com.ikjunweb.config.auth.PrincipalDetails;
+import com.ikjunweb.config.auth.PrincipalDetail;
 import com.ikjunweb.repository.BoardLikeRepository;
-import com.ikjunweb.requestdto.board.BoardLikeRequest;
 import com.ikjunweb.requestdto.board.BoardWriteRequest;
 import com.ikjunweb.responsedto.board.BoardLikeResponse;
 import com.ikjunweb.responsedto.board.BoardWriteResponse;
 import com.ikjunweb.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -29,18 +27,18 @@ public class BoardApiController {
     }
 
     @PostMapping("/ikjun/board/write")
-    public ResponseEntity<BoardWriteResponse> write(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody BoardWriteRequest boardWriteRequest) {
-        boardWriteRequest.setUsername(principalDetails.getUsername());
-        boardWriteRequest.setEmail(principalDetails.getEmail());
+    public ResponseEntity<BoardWriteResponse> write(@AuthenticationPrincipal PrincipalDetail principalDetail, @RequestBody BoardWriteRequest boardWriteRequest) {
+        boardWriteRequest.setUsername(principalDetail.getUsername());
+        boardWriteRequest.setEmail(principalDetail.getEmail());
         BoardWriteResponse boardWriteResponse = boardService.write(boardWriteRequest);
 
         return new ResponseEntity<>(boardWriteResponse, boardWriteResponse.getHttpStatus());
     }
 
     @PostMapping("/ikjun/board/like/{boardId}")
-    public ResponseEntity<BoardLikeResponse> onClickLike(@PathVariable Long boardId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        String username = principalDetails.getUsername();
-        String email = principalDetails.getEmail();
+    public ResponseEntity<BoardLikeResponse> onClickLike(@PathVariable Long boardId, @AuthenticationPrincipal PrincipalDetail principalDetail) {
+        String username = principalDetail.getUsername();
+        String email = principalDetail.getEmail();
         BoardLikeResponse boardLikeResponse = boardService.likeCount(boardId, username, email);
         return new ResponseEntity<>(boardLikeResponse, boardLikeResponse.getHttpStatus());
     }

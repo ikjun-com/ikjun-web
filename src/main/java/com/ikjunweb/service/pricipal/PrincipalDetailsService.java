@@ -1,6 +1,6 @@
 package com.ikjunweb.service.pricipal;
 
-import com.ikjunweb.config.auth.PrincipalDetails;
+import com.ikjunweb.config.auth.PrincipalDetail;
 import com.ikjunweb.entity.user.User;
 import com.ikjunweb.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,6 @@ public class PrincipalDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         if(user == null) return null;
-        return new PrincipalDetails(user);
+        return new PrincipalDetail(user);
     }
 }

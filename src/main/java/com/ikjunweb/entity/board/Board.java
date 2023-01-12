@@ -4,10 +4,12 @@ import com.ikjunweb.entity.BaseEntity;
 import com.ikjunweb.entity.comment.Comment;
 import com.ikjunweb.entity.user.User;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Slf4j
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -47,6 +49,9 @@ public class Board extends BaseEntity {
     @OneToMany(mappedBy = "board")
     private List<BoardLike> likes;
 
+    @OneToMany(mappedBy = "board")
+    private List<BoardHate> hates;
+
     @Column
     private Integer likeCount;
 
@@ -73,10 +78,18 @@ public class Board extends BaseEntity {
         this.likes.add(boardLike);
     }
 
+    public void addHate(BoardHate boardHate) {
+        this.hates.add(boardHate);
+    }
+
     public void removeLike(BoardLike boardLike) {
-        for (BoardLike like : likes) {
-            if(like.getId() == boardLike.getId()) {
-                likes.remove(like);
+        likes.removeIf(item -> item.getId() == boardLike.getId());
+    }
+
+    public void removeHate(BoardHate boardHate) {
+        for (BoardHate hate : hates) {
+            if(hate.getId() == boardHate.getId()) {
+                hates.remove(hate);
             }
         }
     }

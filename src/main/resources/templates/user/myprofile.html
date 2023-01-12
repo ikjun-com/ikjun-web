@@ -9,6 +9,14 @@
 <a sec:authentication="principal.password"></a> <br>
 <a sec:authentication="principal.email"></a> <br>
 <a sec:authentication="principal.nickname"></a> <br>
+<tbody>
+<tr th:each="like:${likes}">
+  <td><a th:href="@{/ikjun/board/{boardId}(boardId=${like.board.id})}" th:text="${like.board.title}"></a></td>
+  <td><a th:text="${like.board.major}"></a></td>
+  <td><a th:text="${like.board.user.nickname}"></a></td>
+  <br>
+</tr>
+</tbody>
 <form>
   <input type="text" id="nickname" class="nickname">
 </form>

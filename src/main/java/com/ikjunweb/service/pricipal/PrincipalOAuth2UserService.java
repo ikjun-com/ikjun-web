@@ -1,6 +1,6 @@
 package com.ikjunweb.service.pricipal;
 
-import com.ikjunweb.config.auth.PrincipalDetails;
+import com.ikjunweb.config.auth.PrincipalDetail;
 import com.ikjunweb.config.oauth.GoogleUserInfo;
 import com.ikjunweb.config.oauth.NaverUserInfo;
 import com.ikjunweb.config.oauth.OAuth2UserInfo;
@@ -61,6 +61,6 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
             userRepository.save(user);
         }
 
-        return new PrincipalDetails(user, oAuth2User.getAttributes());
+        return new PrincipalDetail(user, oAuth2User.getAttributes());
     }
 }
