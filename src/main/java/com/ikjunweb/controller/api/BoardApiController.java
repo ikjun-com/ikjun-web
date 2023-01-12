@@ -23,8 +23,7 @@ public class BoardApiController {
     private final BoardLikeRepository boardLikeRepository;
 
     @Autowired
-    public BoardApiController(BoardService boardService,
-                              BoardLikeRepository boardLikeRepository) {
+    public BoardApiController(BoardService boardService, BoardLikeRepository boardLikeRepository) {
         this.boardService = boardService;
         this.boardLikeRepository = boardLikeRepository;
     }
@@ -34,15 +33,15 @@ public class BoardApiController {
         boardWriteRequest.setUsername(principalDetails.getUsername());
         boardWriteRequest.setEmail(principalDetails.getEmail());
         BoardWriteResponse boardWriteResponse = boardService.write(boardWriteRequest);
-        if(boardWriteResponse.getHttpStatus() != HttpStatus.OK) return new ResponseEntity<>(boardWriteResponse, boardWriteResponse.getHttpStatus());
 
         return new ResponseEntity<>(boardWriteResponse, boardWriteResponse.getHttpStatus());
     }
 
-    @PostMapping("/ikjun/board/{boardId}/like")
-    public ResponseEntity<BoardLikeResponse> onClickLike(@PathVariable Long boardId, @RequestBody BoardLikeRequest boardLikeRequest,
-                                                         @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        boardLikeRequest.setUsername(principalDetails.getUsername());
-        boardLikeRequest.setEmail(principalDetails.getEmail());
+    @PostMapping("/ikjun/board/like/{boardId}")
+    public ResponseEntity<BoardLikeResponse> onClickLike(@PathVariable Long boardId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        String username = principalDetails.getUsername();
+        String email = principalDetails.getEmail();
+        BoardLikeResponse boardLikeResponse = boardService.likeCount(boardId, username, email);
+        return new ResponseEntity<>(boardLikeResponse, boardLikeResponse.getHttpStatus());
     }
 }

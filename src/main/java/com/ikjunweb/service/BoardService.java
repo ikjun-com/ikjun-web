@@ -100,12 +100,12 @@ public class BoardService {
     }
 
     @Transactional
-    public BoardLikeResponse likeCount(Long id, BoardLikeRequest boardLikeRequest) {
+    public BoardLikeResponse likeCount(Long id, String username, String email) {
         Board board = boardRepository.findById(id).orElseThrow(() -> {
             return new IllegalArgumentException("없는 글");
         });
 
-        User user = userRepository.findByUsernameAndEmail(boardLikeRequest.getUsername(), boardLikeRequest.getEmail());
+        User user = userRepository.findByUsernameAndEmail(username, email);
         if(user == null) {
             BoardLikeResponse boardLikeResponse = BoardLikeResponse.builder()
                     .httpStatus(HttpStatus.BAD_REQUEST)
@@ -113,29 +113,42 @@ public class BoardService {
             return boardLikeResponse;
         }
 
-        if (checkLikeUser(board, user)) {
-            BoardLike boardLike = BoardLike.builder()
-                    .board(board)
-                    .user(user)
-                    .build();
+        BoardLike boardLike = BoardLike.builder()
+                .board(board)
+                .user(user)
+                .build();
+        Boolean cancel;
+        BoardLike findLike = checkLikeUser(board, user);
+        if (findLike == null) {
             boardLikeRepository.save(boardLike);
-
+            board.addLike(boardLike);
             board.increaseLikeCount();
+            cancel = false;
         } else {
-            //boardLike 삭제 로직
+            boardLikeRepository.delete(findLike);
+            board.removeLike(boardLike);
             board.decreaseLikeCount();
+            cancel = true;
         }
+
+        BoardLikeResponse boardLikeResponse = BoardLikeResponse.builder()
+                .nickname(user.getNickname())
+                .title(board.getTitle())
+                .cancel(cancel)
+                .httpStatus(HttpStatus.OK)
+                .build();
+        return boardLikeResponse;
     }
 
-    private boolean checkLikeUser(Board board, User user) {
+    private BoardLike checkLikeUser(Board board, User user) {
         List<BoardLike> likes = board.getLikes();
         for (BoardLike like : likes) {
             User likeUser = like.getUser();
             if(likeUser.getId() == user.getId()) {
-                return false;
+                return like;
             }
         }
-        return true;
+        return null;
     }
 
     private boolean validateBoardWrite(BoardWriteRequest boardWriteRequest) {

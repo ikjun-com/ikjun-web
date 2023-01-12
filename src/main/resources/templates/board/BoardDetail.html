@@ -21,10 +21,10 @@
   <a th:text="|viewCount: ${board.viewCount}|"></a> <br>
 </div>
 <div>
-  <form th:action="@{/ikjun/board/{boardId}(boardId=${board.id})/like}" method="post">
+  <form th:action="@{/ikjun/board/like/{boardId}(boardId=${board.id})}" method="post">
     <button type="submit">like</button>
   </form>
-  <form th:action="@{/ikjun/board/{boardId}(boardId=${board.id})/disLike}" method="post">
+  <form th:action="@{/ikjun/board/disLike/{boardId}(boardId=${board.id})}" method="post">
     <button type="submit">disLike</button>
   </form>
 </div>

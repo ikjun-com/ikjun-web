@@ -34,8 +34,7 @@ public class UserApiController {
     public ResponseEntity<UserRegisterResponse> register(@RequestBody UserRegisterRequest userRegisterRequest) {
         UserRegisterResponse userRegisterResponse = userService.register(userRegisterRequest);
 
-        if(userRegisterResponse.getHttpStatus() != HttpStatus.OK) return new ResponseEntity<>(userRegisterResponse, userRegisterResponse.getHttpStatus());
-        return new ResponseEntity<>(userRegisterResponse, HttpStatus.OK);
+        return new ResponseEntity<>(userRegisterResponse, userRegisterResponse.getHttpStatus());
     }
 
     @PutMapping("/ikjun/user/myprofile")
@@ -43,15 +42,13 @@ public class UserApiController {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         UserUpdateResponse userUpdateResponse = userService.update(principalDetails.getId(), userUpdateRequest);
 
-        if(userUpdateResponse.getHttpStatus() != HttpStatus.OK) return new ResponseEntity<>(userUpdateResponse, userUpdateResponse.getHttpStatus());
-        return new ResponseEntity<>(userUpdateResponse, HttpStatus.OK);
+        return new ResponseEntity<>(userUpdateResponse, userUpdateResponse.getHttpStatus());
     }
 
     @DeleteMapping("/ikjun/user/myprofile")
     public ResponseEntity<UserDeleteResponse> delete(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody UserDeleteRequest userDeleteRequest) {
         UserDeleteResponse userDeleteResponse = userService.delete(principalDetails.getId(), userDeleteRequest);
 
-        if(userDeleteResponse.getHttpStatus() != HttpStatus.OK) return new ResponseEntity<>(userDeleteResponse, userDeleteResponse.getHttpStatus());
-        return new ResponseEntity<>(userDeleteResponse, HttpStatus.OK);
+        return new ResponseEntity<>(userDeleteResponse, userDeleteResponse.getHttpStatus());
     }
 }

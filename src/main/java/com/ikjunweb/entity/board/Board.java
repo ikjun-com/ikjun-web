@@ -73,6 +73,14 @@ public class Board extends BaseEntity {
         this.likes.add(boardLike);
     }
 
+    public void removeLike(BoardLike boardLike) {
+        for (BoardLike like : likes) {
+            if(like.getId() == boardLike.getId()) {
+                likes.remove(like);
+            }
+        }
+    }
+
     public void increaseViewCount() {
         this.viewCount = viewCount + 1;
     }
