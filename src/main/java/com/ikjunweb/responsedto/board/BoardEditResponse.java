@@ -10,9 +10,9 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BoardLikeResponse {
-    private String nickname;
+public class BoardEditResponse {
     private String title;
-    private Boolean check;
+    private String subject;
+    private String nickname;
     private HttpStatus httpStatus;
 }

@@ -5,6 +5,9 @@ import com.ikjunweb.repository.BoardRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import javax.persistence.EntityManager;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -23,5 +26,10 @@ public class BoardTest {
             return new IllegalArgumentException("없는 글");
         });
         assertThat(board).isEqualTo(null);
+    }
+
+    @Test
+    void 유저가_쓴_글_목록() {
+
     }
 }

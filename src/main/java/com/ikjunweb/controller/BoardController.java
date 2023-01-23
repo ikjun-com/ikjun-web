@@ -3,12 +3,14 @@ package com.ikjunweb.controller;
 import com.ikjunweb.config.auth.PrincipalDetail;
 import com.ikjunweb.entity.board.Board;
 import com.ikjunweb.service.BoardService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+@Slf4j
 @Controller
 public class BoardController {
 
@@ -55,9 +58,12 @@ public class BoardController {
     }
 
     @GetMapping("/ikjun/board/{boardId}")
-    public String boardDetail(@PathVariable Long boardId, Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String boardDetail(@PathVariable Long boardId, Model model, HttpServletRequest request, HttpServletResponse response,
+                              @AuthenticationPrincipal PrincipalDetail principalDetail) {
         Board board = boardService.findBoard(boardId);
+        boolean author = boardService.isUserWriteBoard(boardId, principalDetail.getUsername(), principalDetail.getEmail());
         model.addAttribute("board", board);
+        model.addAttribute("author", author);
 
         viewCountUp(boardId, request, response);
         return "board/boardDetail";

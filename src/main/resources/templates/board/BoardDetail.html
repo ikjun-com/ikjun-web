@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <title>board detail</title>
@@ -22,11 +22,15 @@
 </div>
 <div>
   <form th:action="@{/ikjun/board/like/{boardId}(boardId=${board.id})}" method="post">
+    <a th:text="|like = ${likeCount}|"></a>
     <button type="submit">like</button>
   </form>
   <form th:action="@{/ikjun/board/disLike/{boardId}(boardId=${board.id})}" method="post">
     <button type="submit">disLike</button>
   </form>
+  <div th:if="${author} == true">
+    <a th:href="@{/ikjun/board/{boardId}(boardId=${board.id})}"></a>
+  </div>
 </div>
 </body>
 </html>

@@ -1,11 +1,13 @@
 package com.ikjunweb.entity.user;
 
 import com.ikjunweb.entity.BaseEntity;
+import com.ikjunweb.entity.board.BoardHate;
 import com.ikjunweb.entity.board.BoardLike;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -43,6 +45,9 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private List<BoardLike> likes;
 
+    @OneToMany(mappedBy = "user")
+    private List<BoardHate> hates;
+
     public void editUser(String nickname) {
         this.nickname = nickname;
     }
@@ -53,6 +58,14 @@ public class User extends BaseEntity {
 
     public void removeLike(BoardLike boardLike) {
         likes.removeIf(item -> item.getId() == boardLike.getId());
+    }
+
+    public void addHate(BoardHate boardHate) {
+        this.hates.add(boardHate);
+    }
+
+    public void removeHate(BoardHate boardHate) {
+        likes.removeIf(item -> item.getId() == boardHate.getId());
     }
 
     @PrePersist

@@ -1,5 +1,6 @@
 package com.ikjunweb.config.auth;
 
+import com.ikjunweb.entity.board.BoardLike;
 import com.ikjunweb.entity.user.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,6 +9,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -67,6 +69,10 @@ public class PrincipalDetail implements UserDetails, OAuth2User {
 
     public Long getId() {
         return user.getId();
+    }
+
+    public List<BoardLike> getLikes() {
+        return user.getLikes();
     }
 
     public User getUser() {

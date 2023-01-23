@@ -7,14 +7,15 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
+@Entity
 public class Board extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -87,11 +88,7 @@ public class Board extends BaseEntity {
     }
 
     public void removeHate(BoardHate boardHate) {
-        for (BoardHate hate : hates) {
-            if(hate.getId() == boardHate.getId()) {
-                hates.remove(hate);
-            }
-        }
+        hates.removeIf(item -> item.getId() == boardHate.getId());
     }
 
     public void increaseViewCount() {

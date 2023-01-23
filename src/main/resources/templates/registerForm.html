@@ -1,44 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>register</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/registerForm.css">
+  <script src="https://kit.fontawesome.com/60e756bd1b.js" crossorigin="anonymous"></script>
+  <title>I K J U N [register]</title>
 </head>
-<style>
-.id_ok{
-color:#008000;
-display: none;
-}
-
-.id_already{
-color:#6A82FB;
-display: none;
-}
-</style>
 <body>
-<h1>register page</h1>
-<hr>
-<form>
-  <div>
-    <input type="text" name="username" id="username" placeholder="username">
-    <button id="usernameCheck" class="usernameCheck" value="N">중복 확인</button>
-    <br>
+<div class="container">
+  <div class="side">
+    <p class="ikjun-title">I K J U N</p>
+    <p class="sub-title">자료집합소 익준에 오신 것을 환영합니다</p>
   </div>
-  <div>
-    <input type="text" name="password" id="password" placeholder="password"> <br>
-  </div>
-  <div>
-    <input type="text" name="email" id="email" placeholder="email">
-    <button id="emailCheck" class="emailCheck" value="N">중복 확인</button> <br>
-  </div>
-  <div>
-    <input type="text" name="nickname" id="nickname" placeholder="nickname">
-    <button id="nicknameCheck" class="nicknameCheck" value="N">중복 확인</button> <br>
-  </div>
-</form>
-<button id="register">register</button>
+
+  <form class="form-control">
+    <div class="inside-control">
+      <label class="name-title">아이디</label>
+      <div class="input-group">
+        <input type="text" placeholder="아이디 입력" id="username" onkeyup="validateName()">
+        <span id="name-error"></span>
+      </div>
+      <div id="name-text">문자와숫자를 이용할 수 있습니다.</div>
+
+      <label class="passwrd-title">비밀번호</label>
+      <div class="input-group">
+        <input type="password" placeholder="비밀번호 입력" id="password" onkeyup="validatePasswrd()">
+        <span id="passwrd-error"></span>
+      </div>
+      <div id="name-text">문자와숫자를 조합하여10자 이상.</div>
+
+      <label class="email-title">E-MAIL</label>
+      <div class="input-group">
+        <input type="email" placeholder="이메일 입력" id="email" onkeyup="validateEmail()">
+        <span id="email-error"></span>
+      </div>
+
+      <label class="nick-title">닉네임</label>
+      <div class="input-group">
+        <input type="text" placeholder="닉네임 입력" id="nickname" onkeyup="validateNick()">
+        <span id="nick-error"></span>
+      </div>
+      <div id="name-text">영문자와숫자를 조합하여2자 이상 8자 이하</div>
+
+      <button onclick="return validateForm()" id="register">회원가입</button>
+      <div>
+        <p class="btn-set">이미계정이 있으신가요?
+          <a th:href="@{/ikjun/loginForm}" class="log-link">로그인</a>
+        </p>
+      </div>
+      <span id="submit-error"></span>
+    </div>
+  </form>
+</div>
+</body>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="/registerForm.js"></script>
 <script type="text/javascript" src="/overlapCheck.js"></script>
-</body>
+<script src="/signUp.js"></script>
 </html>

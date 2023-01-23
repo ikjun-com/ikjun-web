@@ -1,13 +1,17 @@
 package com.ikjunweb.service;
 
 import com.ikjunweb.entity.board.Board;
+import com.ikjunweb.entity.board.BoardHate;
 import com.ikjunweb.entity.board.BoardLike;
 import com.ikjunweb.entity.user.User;
+import com.ikjunweb.repository.BoardHateRepository;
 import com.ikjunweb.repository.BoardLikeRepository;
 import com.ikjunweb.repository.BoardRepository;
 import com.ikjunweb.repository.UserRepository;
-import com.ikjunweb.requestdto.board.BoardLikeRequest;
+import com.ikjunweb.requestdto.board.BoardEditRequest;
 import com.ikjunweb.requestdto.board.BoardWriteRequest;
+import com.ikjunweb.responsedto.board.BoardEditResponse;
+import com.ikjunweb.responsedto.board.BoardHateResponse;
 import com.ikjunweb.responsedto.board.BoardLikeResponse;
 import com.ikjunweb.responsedto.board.BoardWriteResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -30,12 +34,14 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
     private final BoardLikeRepository boardLikeRepository;
+    private final BoardHateRepository boardHateRepository;
 
     @Autowired
-    public BoardService(BoardRepository boardRepository, UserRepository userRepository, BoardLikeRepository boardLikeRepository) {
+    public BoardService(BoardRepository boardRepository, UserRepository userRepository, BoardLikeRepository boardLikeRepository, BoardHateRepository boardHateRepository) {
         this.boardRepository = boardRepository;
         this.userRepository = userRepository;
         this.boardLikeRepository = boardLikeRepository;
+        this.boardHateRepository = boardHateRepository;
     }
 
     @Transactional
@@ -81,6 +87,41 @@ public class BoardService {
     }
 
     @Transactional
+    public BoardEditResponse edit(Long id, BoardEditRequest boardEditRequest) {
+        Board board = boardRepository.findById(id).orElseThrow(() -> {
+            return new IllegalArgumentException("없는 글");
+        });
+        User user = userRepository.findByUsernameAndEmail(boardEditRequest.getUsername(), boardEditRequest.getEmail());
+        if(user == null) {
+            BoardEditResponse boardEditResponse = BoardEditResponse.builder()
+                    .httpStatus(HttpStatus.BAD_REQUEST)
+                    .build();
+            return boardEditResponse;
+        }
+        board.editBoard(boardEditRequest.getTitle(), boardEditRequest.getContent(), boardEditRequest.getAnswer(),
+                boardEditRequest.getExplanation(), boardEditRequest.getMajor(), boardEditRequest.getSubject());
+
+        BoardEditResponse boardEditResponse = BoardEditResponse.builder()
+                .nickname(user.getNickname())
+                .title(board.getTitle())
+                .subject(board.getSubject())
+                .httpStatus(HttpStatus.OK)
+                .build();
+        return boardEditResponse;
+    }
+
+    @Transactional
+    public boolean isUserWriteBoard(Long boardId, String username, String email) {
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> {
+            return new IllegalArgumentException("없는 글");
+        });
+        User user = userRepository.findByUsernameAndEmail(username, email);
+        if(user == null) return false;
+        if(board.getUser().getId() == user.getId()) return true;
+        return false;
+    }
+
+    @Transactional
     public Board findBoard(Long id) {
         Board board = boardRepository.findById(id).orElseThrow(() -> {
             return new IllegalArgumentException("없는 글");
@@ -101,83 +142,8 @@ public class BoardService {
         board.increaseViewCount();
     }
 
-    @Transactional
-    public BoardLikeResponse likeCount(Long id, String username, String email) {
-        Board board = boardRepository.findById(id).orElseThrow(() -> {
-            return new IllegalArgumentException("없는 글");
-        });
-
-        User user = userRepository.findByUsernameAndEmail(username, email);
-        if(user == null) {
-            BoardLikeResponse boardLikeResponse = BoardLikeResponse.builder()
-                    .httpStatus(HttpStatus.BAD_REQUEST)
-                    .build();
-            return boardLikeResponse;
-        }
-
-        BoardLike boardLike = BoardLike.builder()
-                .board(board)
-                .user(user)
-                .build();
-        Boolean cancel;
-        BoardLike findLike = checkLikeUser(board, user);
-        if (findLike == null) {
-            boardLikeRepository.save(boardLike);
-            board.addLike(boardLike);
-
-            System.out.println(user.getNickname() + ": likes");
-            for (BoardLike like : user.getLikes()) {
-                log.warn("{}", like.getId());
-            }
-
-            System.out.println(board.getTitle() + ": likes");
-            for (BoardLike like : board.getLikes()) {
-                log.warn("{}", like.getId());
-            }
-
-            board.increaseLikeCount();
-            cancel = false;
-        } else {
-            user.removeLike(findLike);
-            board.removeLike(findLike);
-            boardLikeRepository.delete(findLike);
-
-            System.out.println(user.getNickname() + ": likes");
-            for (BoardLike like : user.getLikes()) {
-                log.warn("{}", like.getId());
-            }
-
-            System.out.println(board.getTitle() + ": likes");
-            for (BoardLike like : board.getLikes()) {
-                log.warn("{}", like.getId());
-            }
-
-            board.decreaseLikeCount();
-            cancel = true;
-        }
-
-        BoardLikeResponse boardLikeResponse = BoardLikeResponse.builder()
-                .nickname(user.getNickname())
-                .title(board.getTitle())
-                .cancel(cancel)
-                .httpStatus(HttpStatus.OK)
-                .build();
-        return boardLikeResponse;
-    }
-
-    private BoardLike checkLikeUser(Board board, User user) {
-        List<BoardLike> likes = board.getLikes();
-        for (BoardLike like : likes) {
-            User likeUser = like.getUser();
-            if(likeUser.getId() == user.getId()) {
-                return like;
-            }
-        }
-        return null;
-    }
-
     private boolean validateBoardWrite(BoardWriteRequest boardWriteRequest) {
-        if(isNullAndEmpty(boardWriteRequest.getContent()) || isNullAndEmpty(boardWriteRequest.getAnswer()) || isNullAndEmpty(boardWriteRequest.getSubject())) {
+        if (isNullAndEmpty(boardWriteRequest.getContent()) || isNullAndEmpty(boardWriteRequest.getAnswer()) || isNullAndEmpty(boardWriteRequest.getSubject())) {
             return false;
         }
         return true;

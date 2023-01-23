@@ -2,18 +2,53 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>loginForm</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/loginForm.css">
+  <script src="https://kit.fontawesome.com/60e756bd1b.js" crossorigin="anonymous"></script>
+  <title>loginPage</title>
 </head>
 <body>
-<h1>login page</h1>
-<hr>
-<form action="/ikjun/login" method="post">
-  <input type="text" name="username" placeholder="username"> <br>
-  <input type="text" name="password" placeholder="password"> <br>
-  <button>login</button>
-</form>
-<a href="/oauth2/authorization/google">google login</a>
-<a href="/oauth2/authorization/naver">naver login</a>
-<a href="/ikjun/registerForm">register</a>
+<div class="container">
+  <div class="side">
+    <p class="ikjun-title">I K J U N</p>
+    <p class="sub-title">자료집합소 익준에 오신 것을 환영합니다</p>
+  </div>
+  <form action="/ikjun/login" method="post" class="form-control">
+    <main class="inside-control">
+      <h1>로그인</h1>
+      <div class="input-group">
+        <input type="text" placeholder="아이디" id="username" >
+      </div>
+
+      <div class="input-group">
+        <input type="password" placeholder="비밀번호" id="passwrd" >
+      </div>
+
+      <div class="sub-data">
+        <div class="find-id">
+          <a herf="#" class="find-id-link">아이디 찾기</a>
+        </div>
+        <div>&nbsp|&nbsp</div>
+        <div class="find-pwd">
+          <a herf="#" class="find-pwd-link">비밀번호 찾기</a>
+        </div>
+      </div>
+
+      <button onclick="return validateForm()">로그인</button>
+      <div>
+        <p class="btn-set">아직 계정이 없으신가요?
+          <a href="/ikjun/registerForm" class="log-link">회원가입</a>
+          <a href="/oauth2/authorization/google">google login</a>
+          <a href="/oauth2/authorization/naver">naver login</a>
+        </p>
+      </div>
+      <span id="submit-error"></span>
+
+    </main>
+  </form>
+</div>
+
 </body>
+<script src="/loginForm"></script>
 </html>

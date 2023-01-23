@@ -23,63 +23,54 @@
     transform: translate(-50%,-50%);
     border-radius: 4px;
     background: var(--surface-color);
-    box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.8);
   }
   .inside-control{
     position: relative;
-    bottom: 5%;
+    top:10%;
   }
-  ::placeholder{
-    font-size: 14px;
-  }
-  .name-title,.passwrd-title,.email-title,.nick-title{
-    position: relative;
-    top: 12px;
-    font-weight: bold;
-    font-size: 26px;
+  .form-control h1{
     color: var(--onsurface-color);
+    padding-top: 10px;
+    display: flex;
+    position: relative;
+    left :15%;
+  }
+  .sub-data{
+    width: 35%;
+    display: flex;
+    color: #9C9C9C;
+    font-size: 5px;
+    position: relative;
+    left: 52%;
   }
   .input-group{
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
     margin: 10px 0;
     position: relative;
   }
   .input-group input, .input-group textarea{
-    flex-basis: 100%;
+    flex-basis: 68%;
     background: transparent;
     border: 0;
     outline: 0;
     padding: 10px 0;
     border-bottom: 1px solid #999;
-    color: var(--onsurface-color);
+    color: #DFDFDF;
     font-size: 16px;
   }
-  .input-group span{
-    position: absolute;
-    bottom: 12px;
-    right: 17px;
-    font-size: 14px;
-    color: red;
-  }
-
   .input-group input:focus{
     border-bottom-color: #BE54FF;
   }
 
-  #name-text{
-    font-size:10px;
-    margin:0;
-    position: relative;
-    bottom: 10px;
-    color: var(--onsurface-color);
+  ::placeholder{
+    font-size: 14px;
   }
-
-  #name-error, #passwrd-error, #email-error, #nick-error{
-    position: relative;
-    top:3px;
-    right: 5;
+  .find-id-link, .find-pwd-link{
+    cursor: pointer;
   }
   form button{
     background: var(--primary-color);
@@ -90,16 +81,19 @@
     outline: 0;
     cursor: pointer;
     display: block;
-    margin: 30px auto 10px;
+    margin: 80px auto 10px;
     border-radius: 25px;
   }
   .btn-set{
-    color: var(--onsurface-color);
+    display: flex;
+    justify-content: center;
+    font-size: 5px;
+    color: #999;
   }
   .log-link{
     text-decoration: none;
     color: var(--primary-color);
-    font-size: 15px;
+    padding: 0 10px;
   }
   /*오른쪽 사이드부분 */
   .side{
@@ -108,7 +102,7 @@
     font-family: Noto Sans KR;
     top: 45%;
     left: 55%;
-    color: #ABABAB;
+
   }
 
   .ikjun-title{
@@ -117,6 +111,7 @@
   }
   .sub-title{
     font-size: 27px;
+    color: #9C9C9C;
   }
 
   /*화면이 줄어들면 바뀌는 부분*/
@@ -136,19 +131,19 @@
       transform: translate(-50%,-50%);
       border-radius: 4px;
       background: #1F252C;
-      box-shadow: 0 4px 30px rgba(0,0,0,0.8);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
     }
   }
-    /*라이트모드 다크모드*/
-    .light-theme{
-      --background-color: linear-gradient(to left top,#FFFFFF,#FFFFFF,#FFFFFF,#FF637F);
-      --primary-color: #FF637F;
-      --surface-color:#F3F3F3;
-      --onsurface-color:#2D2D2D;
-    }
-    :root{
-      --background-color: linear-gradient(to left top,#121920, #536976);
-      --primary-color: #9747FF;
-      --surface-color:#1F252C;
-      --onsurface-color:#DFDFDF;
-    }
+  /*라이트모드 다크모드*/
+  .light-theme{
+    --background-color: linear-gradient(to left top,#FFFFFF,#FFFFFF,#FFFFFF,#FF637F);
+    --primary-color: #FF637F;
+    --surface-color:#F3F3F3;
+    --onsurface-color:#2D2D2D;
+  }
+  :root{
+    --background-color: linear-gradient(to left top,#121920, #536976);
+    --primary-color: #9747FF;
+    --surface-color:#1F252C;
+    --onsurface-color:#DFDFDF;
+  }

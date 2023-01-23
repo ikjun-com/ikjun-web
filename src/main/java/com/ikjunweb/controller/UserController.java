@@ -1,17 +1,22 @@
 package com.ikjunweb.controller;
 
 import com.ikjunweb.config.auth.PrincipalDetail;
+import com.ikjunweb.entity.board.BoardLike;
 import com.ikjunweb.entity.user.User;
 import com.ikjunweb.service.UserService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
+@Slf4j
 @Controller
 public class UserController {
 
@@ -34,8 +39,6 @@ public class UserController {
 
     @GetMapping("/ikjun/user/myprofile")
     public String userDetail(@AuthenticationPrincipal PrincipalDetail principalDetail, Model model) {
-        User user = principalDetail.getUser();
-        model.addAttribute("likes", user.getLikes());
         return "/user/myprofile";
     }
 
