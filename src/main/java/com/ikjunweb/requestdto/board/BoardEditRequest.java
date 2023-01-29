@@ -1,5 +1,7 @@
 package com.ikjunweb.requestdto.board;
 
+import com.ikjunweb.entity.type.MajorType;
+import com.ikjunweb.entity.type.SubjectType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,8 +16,8 @@ public class BoardEditRequest {
     private String content;
     private String answer;
     private String explanation;
-    private String major;
-    private String subject;
+    private MajorType majorType;
+    private SubjectType subjectType;
     private String username;
     private String email;
 }

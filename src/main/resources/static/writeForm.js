@@ -11,8 +11,8 @@ let start = {
             content: $("#content").val(),
             answer: $("#answer").val(),
             explanation: $("#explanation").val(),
-            major: $("#major").val(),
-            subject: $("#subject").val(),
+            majorType: $("#majorType").val(),
+            subjectType: $("#subjectType").val(),
             unlockStar: $("#unlockStar").val()
         }
 

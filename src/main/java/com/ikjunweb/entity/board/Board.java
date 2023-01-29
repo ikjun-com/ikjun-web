@@ -2,6 +2,8 @@ package com.ikjunweb.entity.board;
 
 import com.ikjunweb.entity.BaseEntity;
 import com.ikjunweb.entity.comment.Comment;
+import com.ikjunweb.entity.type.MajorType;
+import com.ikjunweb.entity.type.SubjectType;
 import com.ikjunweb.entity.user.User;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -32,11 +34,11 @@ public class Board extends BaseEntity {
     @Column
     private String explanation;
 
-    @Column
-    private String major;
+    @Enumerated(EnumType.STRING)
+    private MajorType majorType;
 
-    @Column
-    private String subject;
+    @Enumerated(EnumType.STRING)
+    private SubjectType subjectType;
 
     @Column
     private Integer viewCount;
@@ -66,13 +68,13 @@ public class Board extends BaseEntity {
     @OneToMany(mappedBy = "board")
     private List<Comment> comments;
 
-    public void editBoard(String title, String content, String answer, String explanation, String major, String subject) {
+    public void editBoard(String title, String content, String answer, String explanation, MajorType majorType, SubjectType subjectType) {
         this.title = title;
         this.content = content;
         this.answer = answer;
         this.explanation = explanation;
-        this.major = major;
-        this.subject = subject;
+        this.majorType = majorType;
+        this.subjectType = subjectType;
     }
 
     public void addLike(BoardLike boardLike) {

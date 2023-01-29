@@ -1,5 +1,6 @@
 package com.ikjunweb.responsedto.board;
 
+import com.ikjunweb.entity.type.SubjectType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +13,7 @@ import org.springframework.http.HttpStatus;
 @Builder
 public class BoardWriteResponse {
     private String title;
-    private String subject;
+    private SubjectType subjectType;
     private String nickname;
     private HttpStatus httpStatus;
 }

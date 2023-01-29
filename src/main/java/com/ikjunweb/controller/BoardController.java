@@ -1,7 +1,11 @@
 package com.ikjunweb.controller;
 
 import com.ikjunweb.config.auth.PrincipalDetail;
+import com.ikjunweb.entity.SearchCondition;
 import com.ikjunweb.entity.board.Board;
+import com.ikjunweb.entity.type.MajorType;
+import com.ikjunweb.entity.type.SortType;
+import com.ikjunweb.entity.type.SubjectType;
 import com.ikjunweb.service.BoardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -20,6 +25,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static com.ikjunweb.entity.board.QBoard.board;
 
 @Slf4j
 @Controller
@@ -34,10 +43,39 @@ public class BoardController {
 
     @GetMapping("/ikjun")
     public String home(Authentication authentication, Model model, HttpSession session,
-                       @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<Board> boards = boardService.boardList(pageable);
-        model.addAttribute("boards", boards);
+                       MajorType majorType, SubjectType subjectType, SortType sortType, String keyword) {
+        Map<MajorType, String> majorTypes = MajorType.getMajorTypeMap();
+        Map<SubjectType, String> subjectTypes = SubjectType.getSubjectTypeMap();
+        model.addAttribute("majorTypes", majorTypes);
+        model.addAttribute("subjectTypes", subjectTypes);
+        model.addAttribute("keyword", keyword);
 
+        List<Board> boards = null;
+        if (StringUtils.hasText(keyword)) {
+            boards = boardService.searchBoard(new SearchCondition(keyword, majorType, subjectType));
+        } else {
+            boards = boardService.findAll();
+        }
+
+//        Comparator<Board> popularSort = new Comparator<Board>() {
+//            @Override
+//            public int compare(Board o1, Board o2) {
+//                return o1.getViewCount() - o2.getViewCount();
+//            }
+//        };
+//        Comparator<Board> recentSort = new Comparator<Board>() {
+//            @Override
+//            public int compare(Board o1, Board o2) {
+//                return o1.getCreateDateTime().compareTo(o2.getCreateDateTime());
+//            }
+//        };
+//        if (sortType == SortType.POPULAR) {
+//            Collections.sort(boards, popularSort);
+//        } else {
+//            Collections.sort(boards, recentSort);
+//        }
+
+        model.addAttribute("boards", boards);
         if(authentication != null) {
             PrincipalDetail principalDetail = (PrincipalDetail) authentication.getPrincipal();
             String nickname = principalDetail.getNickname();
@@ -53,7 +91,12 @@ public class BoardController {
     }
 
     @GetMapping("/ikjun/board/writeForm")
-    public String writeForm() {
+    public String writeForm(Model model) {
+        Map<MajorType, String> majorTypes = MajorType.getMajorTypeMap();
+        Map<SubjectType, String> subjectTypes = SubjectType.getSubjectTypeMap();
+        model.addAttribute("majorTypes", majorTypes);
+        model.addAttribute("subjectTypes", subjectTypes);
+
         return "board/writeForm";
     }
 

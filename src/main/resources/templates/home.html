@@ -14,11 +14,23 @@
   <a th:href="@{/logout}">로그아웃</a>
   <a th:href="@{/ikjun/board/writeForm}">글쓰기</a>
 </div>
+  <form th:action="@{/ikjun}" method="get">
+    <select name="majorType" id="majorType">
+      <option selected value="">학과</option>
+      <option th:each="mType:${majorTypes}" th:text="${mType.value}" th:value="${mType.key}"></option>
+    </select>
+    <select name="subjectType" id="subjectType">
+      <option selected value="">과목</option>
+      <option th:each="sType:${subjectTypes}" th:text="${sType.value}" th:value="${sType.key}"></option>
+    </select>
+    <input type="text" name="keyword" th:value="${keyword}">
+    <button type="submit">search</button>
+  </form>
 <div>
 <tbody>
 <tr th:each="board:${boards}">
   <td><a th:href="@{/ikjun/board/{boardId}(boardId=${board.id})}" th:text="${board.title}"></a></td>
-  <td><a th:text="${board.major}"></a></td>
+  <td><a th:text="${board.majorType}"></a></td>
   <td><a th:text="${board.user.nickname}"></a></td>
   <br>
 </tr>

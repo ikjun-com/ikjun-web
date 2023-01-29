@@ -1,5 +1,6 @@
 package com.ikjunweb.service;
 
+import com.ikjunweb.entity.SearchCondition;
 import com.ikjunweb.entity.board.Board;
 import com.ikjunweb.entity.board.BoardHate;
 import com.ikjunweb.entity.board.BoardLike;
@@ -45,6 +46,16 @@ public class BoardService {
     }
 
     @Transactional
+    public List<Board> searchBoard(SearchCondition searchCondition) {
+        return boardRepository.search(searchCondition);
+    }
+
+    @Transactional
+    public List<Board> findAll() {
+        return boardRepository.findAll();
+    }
+
+    @Transactional
     public BoardWriteResponse write(BoardWriteRequest boardWriteRequest) {
         String username = boardWriteRequest.getUsername();
         String email = boardWriteRequest.getEmail();
@@ -70,8 +81,8 @@ public class BoardService {
                 .content(content)
                 .answer(boardWriteRequest.getAnswer())
                 .explanation(boardWriteRequest.getExplanation())
-                .major(boardWriteRequest.getMajor())
-                .subject(boardWriteRequest.getSubject())
+                .majorType(boardWriteRequest.getMajorType())
+                .subjectType(boardWriteRequest.getSubjectType())
                 .unlockStar(boardWriteRequest.getUnlockStar())
                 .user(user)
                 .build();
@@ -80,7 +91,7 @@ public class BoardService {
         BoardWriteResponse boardWriteResponse = BoardWriteResponse.builder()
                 .nickname(user.getNickname())
                 .title(board.getTitle())
-                .subject(board.getSubject())
+                .subjectType(board.getSubjectType())
                 .httpStatus(HttpStatus.OK)
                 .build();
         return boardWriteResponse;
@@ -99,12 +110,12 @@ public class BoardService {
             return boardEditResponse;
         }
         board.editBoard(boardEditRequest.getTitle(), boardEditRequest.getContent(), boardEditRequest.getAnswer(),
-                boardEditRequest.getExplanation(), boardEditRequest.getMajor(), boardEditRequest.getSubject());
+                boardEditRequest.getExplanation(), boardEditRequest.getMajorType(), boardEditRequest.getSubjectType());
 
         BoardEditResponse boardEditResponse = BoardEditResponse.builder()
                 .nickname(user.getNickname())
                 .title(board.getTitle())
-                .subject(board.getSubject())
+                .subjectType(board.getSubjectType())
                 .httpStatus(HttpStatus.OK)
                 .build();
         return boardEditResponse;
@@ -143,7 +154,7 @@ public class BoardService {
     }
 
     private boolean validateBoardWrite(BoardWriteRequest boardWriteRequest) {
-        if (isNullAndEmpty(boardWriteRequest.getContent()) || isNullAndEmpty(boardWriteRequest.getAnswer()) || isNullAndEmpty(boardWriteRequest.getSubject())) {
+        if (isNullAndEmpty(boardWriteRequest.getContent()) || isNullAndEmpty(boardWriteRequest.getAnswer())) {
             return false;
         }
         return true;
