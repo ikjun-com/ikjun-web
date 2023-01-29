@@ -36,6 +36,19 @@ public class BoardController {
 
     private final BoardService boardService;
 
+    Comparator<Board> popularSort = new Comparator<Board>() {
+        @Override
+        public int compare(Board o1, Board o2) {
+            return o1.getViewCount() - o2.getViewCount();
+        }
+    };
+    Comparator<Board> recentSort = new Comparator<Board>() {
+        @Override
+        public int compare(Board o1, Board o2) {
+            return o1.getCreateDateTime().compareTo(o2.getCreateDateTime());
+        }
+    };
+
     @Autowired
     public BoardController(BoardService boardService) {
         this.boardService = boardService;
@@ -51,29 +64,18 @@ public class BoardController {
         model.addAttribute("keyword", keyword);
 
         List<Board> boards = null;
-        if (StringUtils.hasText(keyword)) {
-            boards = boardService.searchBoard(new SearchCondition(keyword, majorType, subjectType));
-        } else {
+        if (majorType == null && subjectType == null && keyword == null) {
             boards = boardService.findAll();
+        } else {
+            boards = boardService.searchBoard(new SearchCondition(keyword, majorType, subjectType));
         }
 
-//        Comparator<Board> popularSort = new Comparator<Board>() {
-//            @Override
-//            public int compare(Board o1, Board o2) {
-//                return o1.getViewCount() - o2.getViewCount();
-//            }
-//        };
-//        Comparator<Board> recentSort = new Comparator<Board>() {
-//            @Override
-//            public int compare(Board o1, Board o2) {
-//                return o1.getCreateDateTime().compareTo(o2.getCreateDateTime());
-//            }
-//        };
-//        if (sortType == SortType.POPULAR) {
-//            Collections.sort(boards, popularSort);
-//        } else {
-//            Collections.sort(boards, recentSort);
-//        }
+
+        if (sortType == SortType.POPULAR) {
+            Collections.sort(boards, popularSort);
+        } else {
+            Collections.sort(boards, recentSort);
+        }
 
         model.addAttribute("boards", boards);
         if(authentication != null) {

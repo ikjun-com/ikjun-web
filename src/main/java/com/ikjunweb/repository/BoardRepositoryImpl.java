@@ -26,12 +26,30 @@ public class BoardRepositoryImpl implements BoardCustomRepository {
     public List<Board> search(SearchCondition searchCondition) {
         return jpaQueryFactory
                 .select(board)
-                .where(titleCt(searchCondition.getContent()),
-                        majorEq(searchCondition.getMajorType()),
-                        subjectEq(searchCondition.getSubjectType()))
+                .where(isSearchable(searchCondition))
                 .from(board)
                 .orderBy(board.createDateTime.desc())
                 .fetch();
+    }
+
+    private BooleanBuilder isSearchable(SearchCondition searchCondition) {
+        MajorType majorType = searchCondition.getMajorType();
+        SubjectType subjectType = searchCondition.getSubjectType();
+        String content = searchCondition.getContent();
+
+        System.out.println("=============================" + majorType + "=="+ subjectType + "=="+ content + "==");
+
+        if (majorType == null && subjectType == null && content != null) {
+            return titleCt(content);
+        } else if (majorType != null && subjectType == null && content == null) {
+            return majorEq(majorType);
+        } else if (majorType != null && subjectType != null && content == null) {
+            return majorEq(majorType).and(subjectEq(subjectType));
+        } else if (majorType != null && subjectType == null && content != null) {
+            return majorEq(majorType).and(titleCt(content));
+        } else {
+            return majorEq(majorType).and(subjectEq(subjectType)).and(titleCt(content));
+        }
     }
 
     private BooleanBuilder nullSafeBuilder(Supplier<BooleanExpression> f) {
