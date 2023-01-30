@@ -1,0 +1,278 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: 0.3s;
+  }
+  body{
+    background-color: var( --background-color);
+  }
+  .container{
+    background-color: var( --background-color);
+    width: 1220px;
+    height: 100vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+  a{
+    text-decoration: none;
+    color: var(--onsurface-color);
+    list-style: none;
+  }
+  /*사이드 메뉴 css 근데 굳이 있어야되나..?*/
+  .side-menu{
+    width: 200px;
+    height: 100vh;
+    border: solid;
+    border-color: var(--surface-color);
+    position: relative;
+  }
+  .side-menu h1{
+    position: relative;
+    padding-left: 15px;
+    padding-top: 20px;
+    font-size: 40px;
+    font-weight: 1;
+  }
+  .bar-links{
+    list-style: none;
+    position: relative;
+    top:30px;
+  }
+  .bar-links li{
+    padding: 10px 10px;
+  }
+  .bar-links li a{
+    color: var(--onsurface-color);
+    text-decoration: none;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+  }
+  .bar-links li a i{
+    font-size: 22px;
+    margin-right: 20px;
+  }
+
+  /*nav-bar*/
+  .navbar {
+    width: 1000px;
+    height: 65px;
+    position: absolute;
+    top: 24px;
+    left: 200px;
+    border-bottom-style:solid;
+    border-color:var(--surface-color);
+  }
+  .navbar-top {
+    list-style: none;
+    display: flex;
+    position: relative;
+    float: right;
+    top:10px;
+    left: 30px;
+  }
+  .navbar-top i{
+    color : var(--onsurface-color);
+  }
+  .navbar-join{
+    background-color: var(--background-color);
+    font-style: bold;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 10px;
+  }
+  .navbar-login{
+    border-style: outset;
+    border: none;
+    background-color: var( --primary-color);
+    color: #FFFFFF;
+    border-radius: 30px;
+    padding: 10px 10px;
+  }
+  /*로그인 했으면 보는 부분*/
+  .log-in-control{
+    position: relative;
+    left: 7%;
+    display: flex;
+    height: 63px;
+    bottom: 13%;
+  }
+  .profile-img{
+    border-radius: 50%;
+    width: 63px;
+    height: 63px;
+  }
+  .login-form{
+    position: relative;
+    top:7%;
+    left: 5%;
+  }
+  .nickname{
+    color: var( --primary-color);
+    font-size: 20px;
+    height: 20px;
+    top: 5%;
+  }
+  .sub-control{
+    display: flex;
+    font-size: 1%;
+    padding: 5px 5px;
+  }
+  /*검색창 관련부분*/
+  .search-bar{
+    position: relative;
+    display: flex;
+    width: 900px;
+    height: 50px;
+    border-radius: 60px;
+    left: 70px;
+  }
+  .search-bar input{
+    border-radius: 15px;
+    flex: 1;
+    border:0;
+    outline: none;
+    padding: 20px 10px;
+    font-size: 15px;
+    background-color: var( --surface-color);
+  }
+  .search-bar i{
+    width: 25px;
+    font-size: 24px;
+    color: var(--onsurface-color);
+    background-color: var( --surface-color);
+  }
+  .search-bar button{
+    position: relative;
+    top: 14px;
+    right: 33px;
+    border: 0;
+    border-radius: 50%;
+    width: 20px;
+    height: 22px;
+    cursor: pointer;
+    color: var( --primary-color);
+  }
+  /*dropdown설정부분*/
+  select {
+    text-align-last: center;
+  }
+  .sort{
+    color: var(--onsurface-color);
+    position: absolute;
+    top: 110px;
+    left:10px;
+  }
+  .sort select{
+    color: var(--onsurface-color);
+    background-color: var(--surface-color);
+    border-radius: 13px;
+    width: 150px;
+    height: 35px;
+  }
+  .filter{
+    color: var(--onsurface-color);
+    position: absolute;
+    top: 110px;
+    left: 300px;
+  }
+  .filter select {
+    color: var(--onsurface-color);
+    background-color: var(--surface-color);
+    border-radius: 13px;
+    width: 150px;
+    height: 35px;
+  }
+  /*임시로 만드는 본문부분 업데이트예정*/
+  .content{
+    position: absolute;
+    width: 900px;
+    height: 170px;
+    border: 1px solid #9c9c9c;
+    border-radius: 13px;
+    top: 190px;
+    left: 280px;
+  }
+  .content h2{
+    width: 500px;
+    position: relative;
+    left: 5%;
+    color: var(--onsurface-color);
+    font-size: 24px;
+  }
+  .sub{
+    position: absolute;
+    color: #9c9c9c;
+    padding-left:40px;
+    font-size: 14px;
+  }
+  .tag-title i{
+    position: absolute;
+    color: #9c9c9c;
+    padding-left:40px;
+    bottom:30px;
+    font-size: 15px;
+  }
+  .write-date{
+    position: absolute;
+    color: #9c9c9c;
+    font-size: 17px;
+    left: 90%;
+    bottom: 70%;
+  }
+  .click-btn{
+    list-style: none;
+    text-decoration: none;
+    font-size: 20px;
+    display: flex;
+    position: relative;
+    float: right;
+    right: 3%;
+    top: 50%;
+    color: var(--onsurface-color);
+  }
+
+  .click-btn img{
+      top:2px;
+      font-size: 17px;
+      padding: 5px 15px;
+  }
+/*다크모드 라이트모드 버튼*/
+#icon{
+  position: fixed;
+  left: 2%;
+  top: 80%;
+  cursor: pointer;
+}
+.light-theme{
+  --background-color: #FFFFFF;
+  --primary-color: #FF637F;
+  --surface-color:#F3F3F3;
+  --onsurface-color:#2D2D2D;
+}
+:root{
+  --background-color: #121920;
+  --primary-color: #9747FF;
+  --surface-color:#1F252C;
+  --onsurface-color:#DFDFDF;
+}
+
+.write-btn {
+    position: relative;
+    top: 220%;
+    background-color: var(--primary-color);
+    border:1px solid  var(--surface-color);
+    text-align: center;
+    line-height: 48px;
+    color: #FFFFFF;
+    border-radius: 50px;
+    width: 100px;
+    height: 50px;
+    cursor: pointer;
+  }
+  .write-btn a{
+    color: var(--surface-color);
+  }

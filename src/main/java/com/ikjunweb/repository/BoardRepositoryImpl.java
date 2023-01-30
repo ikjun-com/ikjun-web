@@ -28,7 +28,7 @@ public class BoardRepositoryImpl implements BoardCustomRepository {
                 .select(board)
                 .where(isSearchable(searchCondition))
                 .from(board)
-                .orderBy(board.createDateTime.desc())
+                .orderBy(board.createDate.desc())
                 .fetch();
     }
 
@@ -36,8 +36,6 @@ public class BoardRepositoryImpl implements BoardCustomRepository {
         MajorType majorType = searchCondition.getMajorType();
         SubjectType subjectType = searchCondition.getSubjectType();
         String content = searchCondition.getContent();
-
-        System.out.println("=============================" + majorType + "=="+ subjectType + "=="+ content + "==");
 
         if (majorType == null && subjectType == null && content != null) {
             return titleCt(content);

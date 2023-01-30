@@ -2,44 +2,90 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/home.css">
+  <title>I K J U N [home]</title>
+  <script src="https://kit.fontawesome.com/60e756bd1b.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <div sec:authorize-expr="isAuthenticated()">
-    <a sec:authentication="principal.nickname" th:href="@{/ikjun/user/myprofile}"></a>
+<span id="currentTheme"></span>
+<div class="container">
+  <div class="side-menu">
+    <h1 class="header"><a href="/ikjun"> I K J U N</a></h1>
+    <ul class="bar-links">
+      <li><a href="#"><i class="fa-solid fa-house"></i><p>Home</p></a></li>
+      <li><a href="#"><i class="fa-regular fa-star"></i><p>Ranking</p></a></li>
+    </ul>
+    <img src="dark-btn.png" id="icon">
   </div>
-  <h2>ikjun</h2>
-<a href="/ikjun/loginForm">로그인</a>
-<div sec:authorize-expr="isAuthenticated()">
-  <a th:href="@{/logout}">로그아웃</a>
-  <a th:href="@{/ikjun/board/writeForm}">글쓰기</a>
-</div>
-  <form th:action="@{/ikjun}" method="get">
-    <select name="sortType" id="sortType">
-      <option th:each="stType:${sortTypes}" th:text="${stType.value}" th:value="${stType.key}"></option>
-    </select>
-    <select name="majorType" id="majorType">
-      <option selected value="">학과</option>
-      <option th:each="mType:${majorTypes}" th:text="${mType.value}" th:value="${mType.key}"></option>
-    </select>
-    <select name="subjectType" id="subjectType">
-      <option selected value="">과목</option>
-      <option th:each="sType:${subjectTypes}" th:text="${sType.value}" th:value="${sType.key}"></option>
-    </select>
-    <input type="text" name="keyword" th:value="${keyword}">
-    <button type="submit">search</button>
-  </form>
-<div>
-<tbody>
-<tr th:each="board:${boards}">
-  <td><a th:href="@{/ikjun/board/{boardId}(boardId=${board.id})}" th:text="${board.title}"></a></td>
-  <td><a th:text="${T(com.ikjunweb.entity.type.MajorType).getMajorType(board.majorType)}"></a></td>
-  <td><a th:text="${T(com.ikjunweb.entity.type.SubjectType).getSubjectType(board.subjectType)}"></a></td>
-  <td><a th:text="${board.likeCount}"></a></td>
-  <td><a th:text="${board.user.nickname}"></a></td>
-  <br>
-</tr>
-</tbody>
+  <nav class="navbar">
+    <form th:action="@{/ikjun}" method="get" class="search-bar">
+      <input type="text" placeholder="검색하세요" autocomplete="off" name="keyword" th:value="${keyword}">
+      <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <ul class="navbar-top" sec:authorize-expr="!isAuthenticated()">
+        <li><a href="/ikjun/registerForm" class="navbar-join">회원가입</a></li> &nbsp; &nbsp; &nbsp;
+        <li><a href="/ikjun/loginForm" class="navbar-login">로그인</a></li>
+      </ul>
+      <!--로그인시 보이는 코드 시작 -->
+      <div class="log-in-control" sec:authorize-expr="isAuthenticated()">
+        <img src="image.jpg" alt="" class="profile-img" >
+        <div class="login-form">
+          <a class="nickname" sec:authentication="principal.nickname" th:href="@{/ikjun/user/myprofile}"></a>
+          <div class="sub-control">
+            <a href="/user/ikjun/myprofile">마이페이지</a>
+            <p style="color: white;">&nbsp&nbsp;|&nbsp&nbsp;</p>
+            <a href="/logout">로그아웃</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sort">정렬</br>
+        <select name="sortType" id="sortType">
+          <option th:each="stType:${sortTypes}" th:text="${stType.value}" th:value="${stType.key}"></option>
+        </select>
+      </div>
+      <div class="filter">필터</br>
+        <select name="majorType" id="majorType" onchange="tagSelected(this)">
+          <option selected value="">학과</option>
+          <option th:each="mType:${majorTypes}" th:text="${mType.value}" th:value="${mType.key}"></option>
+        </select>
+        <select name="subjectType" id="subjectType">
+          <option selected value="">과목</option>
+          <option th:each="sType:${subjectTypes}" th:text="${sType.value}" th:value="${sType.key}"></option>
+        </select>
+      </div>
+      <div class="write-btn"><a href="/ikjun/board/writeForm">글쓰기</a></div>
+    </form>
+  </nav>
+  <main>
+    <tbody>
+    <tr th:each="board:${boards}">
+      <div class="content">
+        <h2><td><a th:href="@{/ikjun/board/{boardId}(boardId=${board.id})}" th:text="${board.title}"></a></td></h2>
+        <div class="write-date"><a th:text="${board.createDate}"></a></div>
+        <div class="sub"><a th:text="|${T(com.ikjunweb.entity.type.MajorType).getMajorType(board.majorType)} / ${T(com.ikjunweb.entity.type.SubjectType).getSubjectType(board.subjectType)}|"></a></div>
+        <div class="tag-title"><i class="fa-solid fa-tag">#숭실대학교#기출#김익수</i></div>
+        <ul class="click-btn">
+          <li class="up-icon"><img src="like.png" alt=""></i><a th:text="${board.likeCount}"></a></li>
+          <li class="down-icon" id="result"><img src="dislike-icon.png" alt=""></i>0</li>
+          <li class="comment-icon"><img src="comment-icon.png" alt=""></i>0</li>
+        </ul>
+      </div>
+      <br>
+    </tr>
+    </tbody>
+  </main>
 </div>
 </body>
+<script src="home.js"></script>
+<!--<footer class="footer">
+    <ul class="navbar_links">
+        <i class="fa-brands fa-youtube"></i>
+        <i class="fa-brands fa-instagram"></i>
+        <i class="fa-brands fa-discord"></i>
+        <i class="fa-brands fa-facebook"></i>
+        <i class="fa-brands fa-tiktok"></i>
+    </ul>
+</footer>-->
 </html>

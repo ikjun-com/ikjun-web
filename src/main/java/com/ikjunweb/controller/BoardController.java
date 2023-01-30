@@ -45,7 +45,7 @@ public class BoardController {
     Comparator<Board> recentSort = new Comparator<Board>() {
         @Override
         public int compare(Board o1, Board o2) {
-            return o2.getCreateDateTime().compareTo(o1.getCreateDateTime());
+            return o2.getCreateDate().compareTo(o1.getCreateDate());
         }
     };
 
