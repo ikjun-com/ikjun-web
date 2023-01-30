@@ -24,19 +24,20 @@ public class BoardLikeServiceImpl implements BoardLikeService{
     @Transactional
     public Boolean pushLikeButton(BoardLikeRequest boardLikeRequest) {
         Optional<BoardLike> OBoardLike = boardLikeRepository.exist(boardLikeRequest.getUser().getId(), boardLikeRequest.getBoardId());
+        Board board = getBoardByLike(boardLikeRequest);
         if (OBoardLike.isPresent()) {
             BoardLike boardLike = OBoardLike.get();
             boardLikeRepository.deleteById(boardLikeRequest.getBoardId());
         } else {
-            Board board = getBoard(boardLikeRequest);
             boardLikeRepository.save(new BoardLike(board, boardLikeRequest.getUser()));
         }
+        board.setLikeCount(getPostLikeNum(board.getId()));
         return true;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Board getBoard(BoardLikeRequest boardLikeRequest) {
+    public Board getBoardByLike(BoardLikeRequest boardLikeRequest) {
         return boardRepository.findById(boardLikeRequest.getBoardId()).orElseThrow(() -> new IllegalArgumentException("해당 게시글은 존재하지 않습니다."));
     }
 
@@ -44,7 +45,7 @@ public class BoardLikeServiceImpl implements BoardLikeService{
     public BoardLikeResponse getPostLikeInfo(BoardLikeRequest boardLikeRequest) {
         return BoardLikeResponse.builder()
                 .nickname(boardLikeRequest.getUser().getNickname())
-                .title(getBoard(boardLikeRequest).getTitle())
+                .title(getBoardByLike(boardLikeRequest).getTitle())
                 .check(checkPushedLike(boardLikeRequest))
                 .httpStatus(HttpStatus.OK)
                 .build();

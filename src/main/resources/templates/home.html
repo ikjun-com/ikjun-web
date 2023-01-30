@@ -15,6 +15,9 @@
   <a th:href="@{/ikjun/board/writeForm}">글쓰기</a>
 </div>
   <form th:action="@{/ikjun}" method="get">
+    <select name="sortType" id="sortType">
+      <option th:each="stType:${sortTypes}" th:text="${stType.value}" th:value="${stType.key}"></option>
+    </select>
     <select name="majorType" id="majorType">
       <option selected value="">학과</option>
       <option th:each="mType:${majorTypes}" th:text="${mType.value}" th:value="${mType.key}"></option>
@@ -30,7 +33,9 @@
 <tbody>
 <tr th:each="board:${boards}">
   <td><a th:href="@{/ikjun/board/{boardId}(boardId=${board.id})}" th:text="${board.title}"></a></td>
-  <td><a th:text="${board.majorType}"></a></td>
+  <td><a th:text="${T(com.ikjunweb.entity.type.MajorType).getMajorType(board.majorType)}"></a></td>
+  <td><a th:text="${T(com.ikjunweb.entity.type.SubjectType).getSubjectType(board.subjectType)}"></a></td>
+  <td><a th:text="${board.likeCount}"></a></td>
   <td><a th:text="${board.user.nickname}"></a></td>
   <br>
 </tr>

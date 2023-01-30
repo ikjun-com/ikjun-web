@@ -43,4 +43,21 @@ public enum SubjectType {
         }
         return result;
     }
+
+    public static String getSubjectType(SubjectType subjectType) {
+        if (subjectType == SubjectType.PROGRAMMING_1) return "프로그래밍 및 실습 1";
+        else if (subjectType == SubjectType.PROGRAMMING_2) return "프로그래밍 및 실습 2";
+        else if (subjectType == SubjectType.COMPUTER_MATH_1) return "컴퓨터수학 1";
+        else if (subjectType == SubjectType.COMPUTER_MATH_2) return "컴퓨터수학 2";
+        else if (subjectType == SubjectType.COMPUTER_CALCULUS) return "컴퓨터 미적분 활용";
+        else if (subjectType == SubjectType.PROBABILITY_STATISTICS) return "확률과 통계";
+        else if (subjectType == SubjectType.COMPUTER_ENGINEERING) return "컴퓨터 공학 기초";
+        else if (subjectType == SubjectType.PHYSICS) return "물리 1 및 실험";
+        else if (subjectType == SubjectType.DISCRETE_MATH) return "이산수학";
+        else if (subjectType == SubjectType.LINUX_SYSTEM) return "리눅스 시스템 관리";
+        else if (subjectType == SubjectType.ENGINEERING_DESIGN) return "창의적 공학 설계";
+        else if (subjectType == SubjectType.ART_TECHNOLOGY) return "art & technology";
+        else if (subjectType == SubjectType.MEDIA) return "미디어 제작 및 실습";
+        return "찾을 수 없음";
+    }
 }

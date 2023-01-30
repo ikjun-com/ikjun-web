@@ -6,7 +6,7 @@ import com.ikjunweb.responsedto.board.BoardLikeResponse;
 
 public interface BoardLikeService {
     Boolean pushLikeButton(BoardLikeRequest boardLikeRequest);
-    Board getBoard(BoardLikeRequest boardLikeRequest);
+    Board getBoardByLike(BoardLikeRequest boardLikeRequest);
     BoardLikeResponse getPostLikeInfo(BoardLikeRequest boardLikeRequest);
     boolean checkPushedLike(BoardLikeRequest boardLikeRequest);
     long getPostLikeNum(Long boardId);

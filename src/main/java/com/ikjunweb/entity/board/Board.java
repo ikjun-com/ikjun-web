@@ -56,10 +56,10 @@ public class Board extends BaseEntity {
     private List<BoardHate> hates;
 
     @Column
-    private Integer likeCount;
+    private Long likeCount;
 
     @Column
-    private Integer hateCount;
+    private Long hateCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
@@ -77,40 +77,12 @@ public class Board extends BaseEntity {
         this.subjectType = subjectType;
     }
 
-    public void addLike(BoardLike boardLike) {
-        this.likes.add(boardLike);
-    }
-
-    public void addHate(BoardHate boardHate) {
-        this.hates.add(boardHate);
-    }
-
-    public void removeLike(BoardLike boardLike) {
-        likes.removeIf(item -> item.getId() == boardLike.getId());
-    }
-
-    public void removeHate(BoardHate boardHate) {
-        hates.removeIf(item -> item.getId() == boardHate.getId());
-    }
-
     public void increaseViewCount() {
         this.viewCount = viewCount + 1;
     }
 
-    public void increaseLikeCount() {
-        this.likeCount = likeCount + 1;
-    }
-
-    public void decreaseLikeCount() {
-        this.likeCount = likeCount - 1;
-    }
-
-    public void increaseHateCount() {
-        this.hateCount = hateCount + 1;
-    }
-
-    public void decreaseHateCount() {
-        this.hateCount = hateCount - 1;
+    public void setLikeCount(Long count) {
+        this.likeCount = count;
     }
 
     @PrePersist

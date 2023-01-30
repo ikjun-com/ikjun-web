@@ -45,7 +45,7 @@ public class BoardController {
     Comparator<Board> recentSort = new Comparator<Board>() {
         @Override
         public int compare(Board o1, Board o2) {
-            return o1.getCreateDateTime().compareTo(o2.getCreateDateTime());
+            return o2.getCreateDateTime().compareTo(o1.getCreateDateTime());
         }
     };
 
@@ -59,8 +59,10 @@ public class BoardController {
                        MajorType majorType, SubjectType subjectType, SortType sortType, String keyword) {
         Map<MajorType, String> majorTypes = MajorType.getMajorTypeMap();
         Map<SubjectType, String> subjectTypes = SubjectType.getSubjectTypeMap();
+        Map<SortType, String> sortTypes = SortType.getSortTypeMap();
         model.addAttribute("majorTypes", majorTypes);
         model.addAttribute("subjectTypes", subjectTypes);
+        model.addAttribute("sortTypes", sortTypes);
         model.addAttribute("keyword", keyword);
 
         List<Board> boards = null;
@@ -69,7 +71,6 @@ public class BoardController {
         } else {
             boards = boardService.searchBoard(new SearchCondition(keyword, majorType, subjectType));
         }
-
 
         if (sortType == SortType.POPULAR) {
             Collections.sort(boards, popularSort);
@@ -87,9 +88,9 @@ public class BoardController {
         return "home";
     }
 
-    @GetMapping("/index")
+    @GetMapping("/")
     public String index() {
-        return "index";
+        return "redirect:/ikjun";
     }
 
     @GetMapping("/ikjun/board/writeForm")
@@ -107,8 +108,13 @@ public class BoardController {
                               @AuthenticationPrincipal PrincipalDetail principalDetail) {
         Board board = boardService.findBoard(boardId);
         boolean author = boardService.isUserWriteBoard(boardId, principalDetail.getUsername(), principalDetail.getEmail());
+        String major = MajorType.getMajorType(board.getMajorType());
+        String subject = SubjectType.getSubjectType(board.getSubjectType());
+
         model.addAttribute("board", board);
         model.addAttribute("author", author);
+        model.addAttribute("major", major);
+        model.addAttribute("subject", subject);
 
         viewCountUp(boardId, request, response);
         return "board/boardDetail";

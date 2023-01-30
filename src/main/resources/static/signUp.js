@@ -29,20 +29,20 @@ function validateName(){
     return true;
 }
 function validatePasswrd(){
-    let passwrd = document.getElementById('passwrd').value;
+    let passwrd = document.getElementById('password').value;
 
     if(!passwrd.match(/^[A-Za-z0-9]*$/)){
         passError.innerHTML = '<i class="fa-solid fa-xmark" style="color:red"></i>';
-        document.getElementById('passwrd').style.borderBottomColor = "red";
+        document.getElementById('password').style.borderBottomColor = "red";
         return false;
     }
     if(passwrd.length >= 20 || passwrd.length <= 9 ){
         passError.innerHTML = '<i class="fa-solid fa-xmark" style="color:red"></i>';
-        document.getElementById('passwrd').style.borderBottomColor = "red";
+        document.getElementById('password').style.borderBottomColor = "red";
         return false;
     }
     passError.innerHTML = '<i class="fas fa-check" style="color:green"></i>';
-    document.getElementById('passwrd').style.borderBottomColor = "green";
+    document.getElementById('password').style.borderBottomColor = "green";
     return true;
 }
 
