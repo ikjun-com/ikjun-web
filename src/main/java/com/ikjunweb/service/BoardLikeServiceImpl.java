@@ -2,8 +2,8 @@ package com.ikjunweb.service;
 
 import com.ikjunweb.entity.board.Board;
 import com.ikjunweb.entity.board.BoardLike;
-import com.ikjunweb.repository.BoardLikeRepository;
-import com.ikjunweb.repository.BoardRepository;
+import com.ikjunweb.repository.board.BoardLikeRepository;
+import com.ikjunweb.repository.board.BoardRepository;
 import com.ikjunweb.requestdto.board.BoardLikeRequest;
 import com.ikjunweb.responsedto.board.BoardLikeResponse;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class BoardLikeServiceImpl implements BoardLikeService{
         Board board = getBoardByLike(boardLikeRequest);
         if (OBoardLike.isPresent()) {
             BoardLike boardLike = OBoardLike.get();
-            boardLikeRepository.deleteById(boardLikeRequest.getBoardId());
+            boardLikeRepository.deleteByBoardId(boardLikeRequest.getBoardId());
         } else {
             boardLikeRepository.save(new BoardLike(board, boardLikeRequest.getUser()));
         }

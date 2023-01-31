@@ -1,16 +1,13 @@
-package com.ikjunweb.repository;
+package com.ikjunweb.repository.board;
 
 import com.ikjunweb.entity.SearchCondition;
 import com.ikjunweb.entity.board.Board;
 import com.ikjunweb.entity.type.MajorType;
-import com.ikjunweb.entity.type.SortType;
 import com.ikjunweb.entity.type.SubjectType;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import static com.ikjunweb.entity.board.QBoard.board;
 import java.util.List;

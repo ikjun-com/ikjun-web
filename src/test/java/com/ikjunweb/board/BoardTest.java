@@ -1,13 +1,9 @@
 package com.ikjunweb.board;
 
 import com.ikjunweb.entity.board.Board;
-import com.ikjunweb.repository.BoardRepository;
-import org.assertj.core.api.Assertions;
+import com.ikjunweb.repository.board.BoardRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-
-import javax.persistence.EntityManager;
 
 import static org.assertj.core.api.Assertions.*;
 

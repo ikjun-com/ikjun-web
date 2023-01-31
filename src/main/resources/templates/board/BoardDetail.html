@@ -32,5 +32,20 @@
     <a th:href="@{/ikjun/board/{boardId}(boardId=${board.id})}"></a>
   </div>
 </div>
+<tr th:each="comment:${comments}">
+  <a th:text="${comment.content}"></a>
+  <a th:text="${comment.user.nickname}"></a>
+  <br>
+</tr>
+<div>
+  <form>
+    <input type="hidden" name="userId" id="userId" th:value="${board.user.id}">
+    <input type="hidden" name="boardId" id="boardId" th:value="${board.id}">
+    <input type="text" name="content" id="content">
+  </form>
+  <button id="commentWrite">댓글 작성</button>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="/commentWrite.js"></script>
 </body>
 </html>

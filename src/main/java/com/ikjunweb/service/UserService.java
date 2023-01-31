@@ -2,13 +2,11 @@ package com.ikjunweb.service;
 
 import com.ikjunweb.entity.user.User;
 import com.ikjunweb.entity.user.UserRole;
-import com.ikjunweb.repository.UserRepository;
+import com.ikjunweb.repository.user.UserRepository;
 import com.ikjunweb.requestdto.user.UserDeleteRequest;
-import com.ikjunweb.requestdto.user.UserLoginRequest;
 import com.ikjunweb.requestdto.user.UserRegisterRequest;
 import com.ikjunweb.requestdto.user.UserUpdateRequest;
 import com.ikjunweb.responsedto.user.UserDeleteResponse;
-import com.ikjunweb.responsedto.user.UserLoginResponse;
 import com.ikjunweb.responsedto.user.UserRegisterResponse;
 import com.ikjunweb.responsedto.user.UserUpdateResponse;
 import org.springframework.beans.factory.annotation.Autowired;

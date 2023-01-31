@@ -1,7 +1,7 @@
 package com.ikjunweb.service;
 
 import com.ikjunweb.entity.user.User;
-import com.ikjunweb.repository.UserRepository;
+import com.ikjunweb.repository.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,21 +3,19 @@ package com.ikjunweb.controller;
 import com.ikjunweb.config.auth.PrincipalDetail;
 import com.ikjunweb.entity.SearchCondition;
 import com.ikjunweb.entity.board.Board;
+import com.ikjunweb.entity.comment.Comment;
 import com.ikjunweb.entity.type.MajorType;
 import com.ikjunweb.entity.type.SortType;
 import com.ikjunweb.entity.type.SubjectType;
+import com.ikjunweb.service.BoardLikeService;
 import com.ikjunweb.service.BoardService;
+import com.ikjunweb.service.CommentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -26,15 +24,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-
-import static com.ikjunweb.entity.board.QBoard.board;
 
 @Slf4j
 @Controller
 public class BoardController {
 
     private final BoardService boardService;
+    private final CommentService commentService;
+    private final BoardLikeService boardLikeService;
 
     Comparator<Board> popularSort = new Comparator<Board>() {
         @Override
@@ -50,8 +47,10 @@ public class BoardController {
     };
 
     @Autowired
-    public BoardController(BoardService boardService) {
+    public BoardController(BoardService boardService, CommentService commentService, BoardLikeService boardLikeService) {
         this.boardService = boardService;
+        this.commentService = commentService;
+        this.boardLikeService = boardLikeService;
     }
 
     @GetMapping("/ikjun")
@@ -60,6 +59,7 @@ public class BoardController {
         Map<MajorType, String> majorTypes = MajorType.getMajorTypeMap();
         Map<SubjectType, String> subjectTypes = SubjectType.getSubjectTypeMap();
         Map<SortType, String> sortTypes = SortType.getSortTypeMap();
+
         model.addAttribute("majorTypes", majorTypes);
         model.addAttribute("subjectTypes", subjectTypes);
         model.addAttribute("sortTypes", sortTypes);
@@ -110,11 +110,15 @@ public class BoardController {
         boolean author = boardService.isUserWriteBoard(boardId, principalDetail.getUsername(), principalDetail.getEmail());
         String major = MajorType.getMajorType(board.getMajorType());
         String subject = SubjectType.getSubjectType(board.getSubjectType());
+        long likeCount = boardLikeService.getPostLikeNum(boardId);
+        List<Comment> comments = commentService.getComments(boardId);
 
         model.addAttribute("board", board);
         model.addAttribute("author", author);
         model.addAttribute("major", major);
         model.addAttribute("subject", subject);
+        model.addAttribute("comments", comments);
+        model.addAttribute("likeCount", likeCount);
 
         viewCountUp(boardId, request, response);
         return "board/boardDetail";

@@ -1,4 +1,4 @@
-package com.ikjunweb.repository;
+package com.ikjunweb.repository.board;
 
 import com.ikjunweb.entity.board.BoardHate;
 import org.springframework.data.jpa.repository.JpaRepository;

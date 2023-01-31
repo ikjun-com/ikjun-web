@@ -4,10 +4,13 @@ import com.ikjunweb.config.auth.PrincipalDetail;
 import com.ikjunweb.requestdto.board.BoardEditRequest;
 import com.ikjunweb.requestdto.board.BoardLikeRequest;
 import com.ikjunweb.requestdto.board.BoardWriteRequest;
+import com.ikjunweb.requestdto.comment.CommentWriteRequest;
 import com.ikjunweb.responsedto.board.BoardEditResponse;
 import com.ikjunweb.responsedto.board.BoardWriteResponse;
+import com.ikjunweb.responsedto.comment.CommentWriteResponse;
 import com.ikjunweb.service.BoardLikeService;
 import com.ikjunweb.service.BoardService;
+import com.ikjunweb.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,11 +23,13 @@ public class BoardApiController {
 
     private final BoardService boardService;
     private final BoardLikeService boardLikeService;
+    private final CommentService commentService;
 
     @Autowired
-    public BoardApiController(BoardService boardService, BoardLikeService boardLikeService) {
+    public BoardApiController(BoardService boardService, BoardLikeService boardLikeService, CommentService commentService) {
         this.boardService = boardService;
         this.boardLikeService = boardLikeService;
+        this.commentService = commentService;
     }
 
     @PostMapping("/ikjun/board/write")
@@ -55,5 +60,11 @@ public class BoardApiController {
         boardLikeService.pushLikeButton(boardLikeRequest);
 
         return "redirect:/ikjun/board/" + boardId;
+    }
+
+    @PostMapping("/ikjun/board/{boardId}/comment")
+    public ResponseEntity<CommentWriteResponse> writeComment(@RequestBody CommentWriteRequest commentWriteRequest) {
+        CommentWriteResponse commentWriteResponse = commentService.writeComment(commentWriteRequest);
+        return new ResponseEntity<>(commentWriteResponse, commentWriteResponse.getHttpStatus());
     }
 }

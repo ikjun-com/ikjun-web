@@ -61,6 +61,9 @@ public class Board extends BaseEntity {
     @Column
     private Long hateCount;
 
+    @Column
+    private Long commentCount;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private User user;
@@ -83,6 +86,10 @@ public class Board extends BaseEntity {
 
     public void setLikeCount(Long count) {
         this.likeCount = count;
+    }
+
+    public void setCommentCount(Long count) {
+        this.commentCount = count;
     }
 
     @PrePersist

@@ -1,4 +1,4 @@
-package com.ikjunweb.repository;
+package com.ikjunweb.repository.user;
 
 import com.ikjunweb.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;

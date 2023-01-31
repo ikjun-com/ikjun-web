@@ -6,7 +6,7 @@ import com.ikjunweb.config.oauth.NaverUserInfo;
 import com.ikjunweb.config.oauth.OAuth2UserInfo;
 import com.ikjunweb.entity.user.User;
 import com.ikjunweb.entity.user.UserRole;
-import com.ikjunweb.repository.UserRepository;
+import com.ikjunweb.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,7 +15,6 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
