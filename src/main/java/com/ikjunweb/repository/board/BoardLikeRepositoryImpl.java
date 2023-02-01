@@ -1,10 +1,20 @@
 package com.ikjunweb.repository.board;
 
+import com.ikjunweb.entity.board.Board;
 import com.ikjunweb.entity.board.BoardLike;
+import com.ikjunweb.entity.user.User;
+import com.ikjunweb.repository.user.UserRepository;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import static com.ikjunweb.entity.board.QBoardLike.boardLike;
+import static com.ikjunweb.entity.board.QBoard.board;
+
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -12,6 +22,7 @@ import java.util.Optional;
 public class BoardLikeRepositoryImpl implements BoardLikeCustomRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
+    private final UserRepository userRepository;
 
     @Override
     public Optional<BoardLike> exist(Long userId, Long boardId) {
@@ -29,5 +40,19 @@ public class BoardLikeRepositoryImpl implements BoardLikeCustomRepository {
                 .selectFrom(boardLike)
                 .where(boardLike.board.id.eq(boardId))
                 .fetchCount();
+    }
+
+    @Override
+    public List<BoardLike> findBoardByLike(Long userId) {
+        return jpaQueryFactory
+                .select(boardLike)
+                .where(isUserLike(userId))
+                .from(boardLike)
+                .fetch();
+    }
+
+    @Transactional
+    private BooleanExpression isUserLike(Long userId) {
+        return boardLike.user.id.eq(userId);
     }
 }

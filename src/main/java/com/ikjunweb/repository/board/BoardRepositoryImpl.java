@@ -4,6 +4,8 @@ import com.ikjunweb.entity.SearchCondition;
 import com.ikjunweb.entity.board.Board;
 import com.ikjunweb.entity.type.MajorType;
 import com.ikjunweb.entity.type.SubjectType;
+import com.ikjunweb.entity.user.User;
+import com.ikjunweb.repository.user.UserRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -18,6 +20,7 @@ import java.util.function.Supplier;
 public class BoardRepositoryImpl implements BoardCustomRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
+    private final UserRepository userRepository;
 
     @Override
     public List<Board> search(SearchCondition searchCondition) {

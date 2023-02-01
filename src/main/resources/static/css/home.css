@@ -188,14 +188,15 @@
   }
   /*임시로 만드는 본문부분 업데이트예정*/
   .content{
-    position: absolute;
-    width: 900px;
-    height: 170px;
-    border: 1px solid #9c9c9c;
-    border-radius: 13px;
-    top: 190px;
-    left: 280px;
-  }
+      display: inline-block;
+      left: 20%;
+      bottom: 700px;
+      position: relative;
+      width: 900px;
+      height: 170px;
+      border: 1px solid #9c9c9c;
+      border-radius: 13px;
+    }
   .content h2{
     width: 500px;
     position: relative;

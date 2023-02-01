@@ -1,19 +1,18 @@
 package com.ikjunweb.controller;
 
 import com.ikjunweb.config.auth.PrincipalDetail;
+import com.ikjunweb.entity.board.Board;
 import com.ikjunweb.entity.board.BoardLike;
-import com.ikjunweb.entity.user.User;
+import com.ikjunweb.service.BoardLikeService;
+import com.ikjunweb.service.BoardService;
 import com.ikjunweb.service.UserService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Slf4j
@@ -21,10 +20,12 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final BoardLikeService boardLikeService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, BoardLikeService boardLikeService) {
         this.userService = userService;
+        this.boardLikeService = boardLikeService;
     }
 
     @GetMapping("/ikjun/registerForm")
@@ -39,6 +40,8 @@ public class UserController {
 
     @GetMapping("/ikjun/user/myprofile")
     public String userDetail(@AuthenticationPrincipal PrincipalDetail principalDetail, Model model) {
+        List<BoardLike> likes = boardLikeService.getUserLike(principalDetail.getId());
+        model.addAttribute("likes", likes);
         return "/user/myprofile";
     }
 

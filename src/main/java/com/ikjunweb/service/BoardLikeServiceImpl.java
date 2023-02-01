@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -59,5 +60,10 @@ public class BoardLikeServiceImpl implements BoardLikeService{
     @Override
     public long getPostLikeNum(Long boardId) {
         return boardLikeRepository.findPostLikeNum(boardId);
+    }
+
+    @Override
+    public List<BoardLike> getUserLike(Long userId) {
+        return boardLikeRepository.findBoardByLike(userId);
     }
 }

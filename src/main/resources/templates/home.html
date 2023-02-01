@@ -11,7 +11,7 @@
 <body>
 <span id="currentTheme"></span>
 <div class="container">
-  <div class="side-menu">
+  <div class="side-menu"> <!--사이드 바 있는 부분-->
     <h1 class="header"><a href="/ikjun"> I K J U N</a></h1>
     <ul class="bar-links">
       <li><a href="#"><i class="fa-solid fa-house"></i><p>Home</p></a></li>
@@ -19,6 +19,7 @@
     </ul>
     <img src="dark-btn.png" id="icon">
   </div>
+
   <nav class="navbar">
     <form th:action="@{/ikjun}" method="get" class="search-bar">
       <input type="text" placeholder="검색하세요" autocomplete="off" name="keyword" th:value="${keyword}">
@@ -33,7 +34,7 @@
         <div class="login-form">
           <a class="nickname" sec:authentication="principal.nickname" th:href="@{/ikjun/user/myprofile}"></a>
           <div class="sub-control">
-            <a href="/user/ikjun/myprofile">마이페이지</a>
+            <a th:href="@{/ikjun/user/myprofile}">마이페이지</a>
             <p style="color: white;">&nbsp&nbsp;|&nbsp&nbsp;</p>
             <a href="/logout">로그아웃</a>
           </div>
@@ -58,7 +59,7 @@
       <div class="write-btn"><a href="/ikjun/board/writeForm">글쓰기</a></div>
     </form>
   </nav>
-  <main>
+  <main><!--본문 글쓰기 보이는 부분-->
     <tbody>
     <tr th:each="board:${boards}">
       <div class="content">
