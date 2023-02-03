@@ -2,7 +2,7 @@ package com.ikjunweb.service;
 
 import com.ikjunweb.entity.board.Board;
 import com.ikjunweb.entity.board.BoardLike;
-import com.ikjunweb.repository.board.BoardLikeRepository;
+import com.ikjunweb.repository.board_like.BoardLikeRepository;
 import com.ikjunweb.repository.board.BoardRepository;
 import com.ikjunweb.requestdto.board.BoardLikeRequest;
 import com.ikjunweb.responsedto.board.BoardLikeResponse;

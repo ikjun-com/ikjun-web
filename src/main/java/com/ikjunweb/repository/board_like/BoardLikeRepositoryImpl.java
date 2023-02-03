@@ -1,10 +1,7 @@
-package com.ikjunweb.repository.board;
+package com.ikjunweb.repository.board_like;
 
-import com.ikjunweb.entity.board.Board;
 import com.ikjunweb.entity.board.BoardLike;
-import com.ikjunweb.entity.user.User;
 import com.ikjunweb.repository.user.UserRepository;
-import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.ikjunweb.entity.board.QBoardLike.boardLike;
-import static com.ikjunweb.entity.board.QBoard.board;
 
 import java.util.List;
 import java.util.Optional;

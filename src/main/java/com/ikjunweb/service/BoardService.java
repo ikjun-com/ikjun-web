@@ -2,10 +2,9 @@ package com.ikjunweb.service;
 
 import com.ikjunweb.entity.SearchCondition;
 import com.ikjunweb.entity.board.Board;
-import com.ikjunweb.entity.board.BoardLike;
 import com.ikjunweb.entity.user.User;
 import com.ikjunweb.repository.board.BoardHateRepository;
-import com.ikjunweb.repository.board.BoardLikeRepository;
+import com.ikjunweb.repository.board_like.BoardLikeRepository;
 import com.ikjunweb.repository.board.BoardRepository;
 import com.ikjunweb.repository.user.UserRepository;
 import com.ikjunweb.requestdto.board.BoardEditRequest;

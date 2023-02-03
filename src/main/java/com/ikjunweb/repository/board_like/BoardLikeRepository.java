@@ -1,4 +1,4 @@
-package com.ikjunweb.repository.board;
+package com.ikjunweb.repository.board_like;
 
 import com.ikjunweb.entity.board.BoardLike;
 import org.springframework.data.jpa.repository.JpaRepository;
